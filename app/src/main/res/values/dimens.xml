@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="hero_heading">36sp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_small_title">16sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_large">28sp</dimen>
+
+    <dimen name="PaddingSmall">4dp</dimen>
+    <dimen name="Padding">8dp</dimen>
+    <dimen name="MediumPadding">12dp</dimen>
+    <dimen name="DoublePadding">16dp</dimen>
+    <dimen name="SideNavigationWidth">320dp</dimen>
+    <dimen name="default_navigation_list_item_height">60dp</dimen>
+    <dimen name="default_side_padding">20dp</dimen>
+    <dimen name="divider_thickness">1dp</dimen>
+</resources>
