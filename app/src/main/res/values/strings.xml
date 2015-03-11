@@ -18,5 +18,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_newworksheet">New worksheet</string>
+    <string name="title_activity_sheet_designer">SheetDesignerActivity</string>
 
 </resources>

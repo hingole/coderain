@@ -57,7 +57,7 @@ public abstract class BaseActivity
         fragmentClass,
         savedInstanceState);
     if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+      getSupportFragmentManager().beginTransaction().replace(getContentFrameId(),
           fragment, fragmentTag).commit();
     }
     return fragment;

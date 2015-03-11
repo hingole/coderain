@@ -1,33 +1,49 @@
 package in.shingole.activity;
 
-import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import in.shingole.R;
+import in.shingole.common.BaseActivity;
 import in.shingole.fragment.DashboardFragment;
+import in.shingole.fragment.SheetDesignerFragment;
+import in.shingole.fragment.SplashFragment;
 import in.shingole.widget.LeftNavigationWidget;
 
-public class DashboardActivity extends AbstractNavigationDrawerActivity
-    implements DashboardFragment.OnFragmentInteractionListener {
-  private DashboardFragment dashboardFragment;
-  private static final int DESIGN_SHEET_REQUEST_CODE = 909;
+public class SheetDesignerActivity extends BaseActivity
+    implements SheetDesignerFragment.OnFragmentInteractionListener {
+
+  SheetDesignerFragment sheetDesignerFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    dashboardFragment = addFragment(
-        DashboardFragment.FRAGMENT_TAG,
-        DashboardFragment.class,
+//    getSupportFragmentManager().beginTransaction()
+//        .add(getContentFrameId(), new SheetDesignerFragment())
+//        .commit();
+    sheetDesignerFragment = addFragment(
+        SheetDesignerFragment.FRAGMENT_TAG,
+        SheetDesignerFragment.class,
         savedInstanceState);
+  }
+
+  @Override
+  protected Object[] geActivitytModules() {
+    return new Object[]{
+        new ActivityScopeModule(this),
+    };
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+    getMenuInflater().inflate(R.menu.menu_sheet_designer, menu);
     return true;
   }
 
@@ -38,12 +54,6 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    if (id == R.id.action_add) {
-      Intent intent = new Intent();
-      intent.setClass(this, SheetDesignerActivity.class);
-      startActivityForResult(intent, DESIGN_SHEET_REQUEST_CODE);
-      return true;
-    }
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
       return true;
@@ -53,13 +63,7 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   }
 
   @Override
-  protected LeftNavigationWidget.NavigationType getNavigationType() {
-    return LeftNavigationWidget.NavigationType.SHEETS;
-  }
-
-  @Override
   public void onFragmentInteraction(Uri uri) {
-    // Do nothing for now.
+    // Nothing as of now.
   }
-
 }

@@ -12,6 +12,7 @@ import in.shingole.common.BaseActivity;
 import in.shingole.common.ForActivity;
 import in.shingole.fragment.DashboardFragment;
 import in.shingole.fragment.NavigationDrawerFragment;
+import in.shingole.fragment.SheetDesignerFragment;
 import in.shingole.fragment.SplashFragment;
 
 /**
@@ -22,12 +23,14 @@ import in.shingole.fragment.SplashFragment;
     library = true,
     addsTo = SheetMakerAppScopeModule.class, // Important for object graph validation at compile time
     injects = {
-        SplashActivity.class,
         SplashFragment.class,
+        SheetDesignerFragment.class,
         DashboardFragment.class,
+        NavigationDrawerFragment.class,
+        SplashActivity.class,
         AbstractNavigationDrawerActivity.class,
         DashboardActivity.class,
-        NavigationDrawerFragment.class,
+        SheetDesignerActivity.class
     }
 )
 public class ActivityScopeModule {

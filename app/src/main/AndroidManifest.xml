@@ -26,6 +26,14 @@
             android:name=".activity.DashboardActivity"
             android:label="@string/title_activity_filelist" >
         </activity>
+        <activity
+            android:name=".activity.SheetDesignerActivity"
+            android:label="@string/title_activity_sheet_designer"
+            android:parentActivityName=".activity.DashboardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.shingole.activity.DashboardActivity" />
+        </activity>
     </application>
 
 </manifest>
