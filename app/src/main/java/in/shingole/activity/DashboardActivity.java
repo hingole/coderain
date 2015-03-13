@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import in.shingole.R;
+import in.shingole.data.model.TestData;
 import in.shingole.fragment.DashboardFragment;
 import in.shingole.widget.LeftNavigationWidget;
 
@@ -58,8 +59,9 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   }
 
   @Override
-  public void onFragmentInteraction(Uri uri) {
+  public void loadData() {
     // Do nothing for now.
+    dashboardFragment.getWorksheetListAdapter().setData(TestData.sampleWorksheet());
   }
 
 }

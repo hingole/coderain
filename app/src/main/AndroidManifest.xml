@@ -34,6 +34,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="in.shingole.activity.DashboardActivity" />
         </activity>
+
+        <service
+            android:name=".WorksheetService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

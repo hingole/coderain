@@ -1,4 +1,4 @@
-package in.shingole.model;
+package in.shingole.data.model;
 
 /**
  * Menu items for left nav drawer.

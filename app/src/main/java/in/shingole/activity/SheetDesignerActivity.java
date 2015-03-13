@@ -24,9 +24,6 @@ public class SheetDesignerActivity extends BaseActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-//    getSupportFragmentManager().beginTransaction()
-//        .add(getContentFrameId(), new SheetDesignerFragment())
-//        .commit();
     sheetDesignerFragment = addFragment(
         SheetDesignerFragment.FRAGMENT_TAG,
         SheetDesignerFragment.class,

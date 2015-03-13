@@ -19,5 +19,6 @@
     <string name="menu_feedback">Feedback</string>
     <string name="menu_newworksheet">New worksheet</string>
     <string name="title_activity_sheet_designer">SheetDesignerActivity</string>
+    <string name="number_of_pencils">Count the number of pencils</string>
 
 </resources>

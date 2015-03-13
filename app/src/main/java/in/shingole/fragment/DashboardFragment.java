@@ -2,6 +2,7 @@ package in.shingole.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import in.shingole.R;
 import in.shingole.common.BaseFragment;
+import in.shingole.data.adapters.WorksheetListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,8 +29,6 @@ import in.shingole.common.BaseFragment;
 public class DashboardFragment extends BaseFragment {
 
   public static final String FRAGMENT_TAG = "DASHBOARD_FRAGMENT";
-  static final String[] files = new String[]{
-      "Sheet 1", "Sheet 2", "Sheet 3"};
   // TODO: Rename parameter arguments, choose names that match
   // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
   private static final String ARG_PARAM1 = "param1";
@@ -38,6 +39,7 @@ public class DashboardFragment extends BaseFragment {
   private String mParam2;
 
   private OnFragmentInteractionListener mListener;
+  private WorksheetListAdapter worksheetListAdapter;
 
   public DashboardFragment() {
     // Required empty public constructor
@@ -75,25 +77,28 @@ public class DashboardFragment extends BaseFragment {
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-    GridView gridview = (GridView) fragmentView.findViewById(R.id.dashboard_grid);
-    gridview.setAdapter(new ArrayAdapter<String>(getActivity(),
-        android.R.layout.simple_list_item_1, files));
+    final GridView gridview = (GridView) fragmentView.findViewById(R.id.dashboard_grid);
+    this.worksheetListAdapter = new WorksheetListAdapter(getActivity(), 0);
+    worksheetListAdapter.registerDataSetObserver(new DataSetObserver() {
+      public void onChanged() {
+        //gridview.invalidateViews();
+      }
 
+    });
+
+    gridview.setAdapter(worksheetListAdapter);
     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
       }
     });
-
-
     return fragmentView;
   }
 
-  // TODO: Rename method, update argument and hook method into UI event
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
+  @Override
+  public void onResume() {
+    super.onResume();
+    mListener.loadData();
   }
 
   @Override
@@ -113,6 +118,10 @@ public class DashboardFragment extends BaseFragment {
     mListener = null;
   }
 
+  public WorksheetListAdapter getWorksheetListAdapter() {
+    return worksheetListAdapter;
+  }
+
   /**
    * This interface must be implemented by activities that contain this
    * fragment to allow an interaction in this fragment to be communicated
@@ -125,7 +134,7 @@ public class DashboardFragment extends BaseFragment {
    */
   public interface OnFragmentInteractionListener {
     // TODO: Update argument type and name
-    public void onFragmentInteraction(Uri uri);
+    public void loadData();
   }
 
 }

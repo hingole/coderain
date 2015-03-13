@@ -8,6 +8,12 @@ import android.support.v4.app.Fragment;
  * Base fragment which performs injection using the activity-scoped object graph
  */
 public abstract class BaseFragment extends Fragment {
+  public enum ViewState {
+    LOADING,
+    RENDERED,
+    HIDDEN,
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -16,6 +22,9 @@ public abstract class BaseFragment extends Fragment {
     ((BaseActivity) getActivity()).inject(this);
   }
 
+  public void setViewState(ViewState viewState) {
+    // Derived classes should override this.
+  }
   protected <T> T getView(int id) {
     return (T) getView().findViewById(id);
   }
