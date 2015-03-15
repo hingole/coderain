@@ -1,12 +1,16 @@
 package in.shingole.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Worksheet class
  */
-public class Worksheet {
+public class Worksheet implements Parcelable {
   private String id;
   private String name;
   private String description;
@@ -61,4 +65,52 @@ public class Worksheet {
   public void setQuestionList(List<Question> questionList) {
     this.questionList = questionList;
   }
+
+  protected Worksheet(Parcel in) {
+    id = in.readString();
+    name = in.readString();
+    description = in.readString();
+    long tmpDateCreated = in.readLong();
+    dateCreated = tmpDateCreated != -1 ? new Date(tmpDateCreated) : null;
+    category = in.readString();
+    if (in.readByte() == 0x01) {
+      questionList = new ArrayList<Question>();
+      in.readList(questionList, Question.class.getClassLoader());
+    } else {
+      questionList = null;
+    }
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(id);
+    dest.writeString(name);
+    dest.writeString(description);
+    dest.writeLong(dateCreated != null ? dateCreated.getTime() : -1L);
+    dest.writeString(category);
+    if (questionList == null) {
+      dest.writeByte((byte) (0x00));
+    } else {
+      dest.writeByte((byte) (0x01));
+      dest.writeList(questionList);
+    }
+  }
+
+  @SuppressWarnings("unused")
+  public static final Parcelable.Creator<Worksheet> CREATOR = new Parcelable.Creator<Worksheet>() {
+    @Override
+    public Worksheet createFromParcel(Parcel in) {
+      return new Worksheet(in);
+    }
+
+    @Override
+    public Worksheet[] newArray(int size) {
+      return new Worksheet[size];
+    }
+  };
 }

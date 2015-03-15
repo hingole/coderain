@@ -2,6 +2,7 @@ package in.shingole.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +16,11 @@ import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import in.shingole.R;
+import in.shingole.activity.DashboardActivity;
+import in.shingole.activity.ViewWorksheetActivity;
 import in.shingole.common.BaseFragment;
 import in.shingole.data.adapters.WorksheetListAdapter;
+import in.shingole.data.model.Worksheet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,22 +83,19 @@ public class DashboardFragment extends BaseFragment {
     View fragmentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
     final GridView gridview = (GridView) fragmentView.findViewById(R.id.dashboard_grid);
     this.worksheetListAdapter = new WorksheetListAdapter(getActivity(), 0);
-    worksheetListAdapter.registerDataSetObserver(new DataSetObserver() {
-      public void onChanged() {
-        //gridview.invalidateViews();
-      }
-
-    });
-
     gridview.setAdapter(worksheetListAdapter);
     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+        Worksheet item = worksheetListAdapter.getItem(position);
+        openWorksheet(item);
       }
     });
     return fragmentView;
   }
 
+  private void openWorksheet(Worksheet sheet) {
+    mListener.openWorksheet(sheet);
+  }
   @Override
   public void onResume() {
     super.onResume();
@@ -133,8 +134,9 @@ public class DashboardFragment extends BaseFragment {
    * >Communicating with Other Fragments</a> for more information.
    */
   public interface OnFragmentInteractionListener {
-    // TODO: Update argument type and name
-    public void loadData();
+    void loadData();
+
+    void openWorksheet(Worksheet worksheet);
   }
 
 }

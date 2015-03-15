@@ -8,65 +8,73 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import in.shingole.R;
 import in.shingole.common.BaseFragment;
-import in.shingole.data.model.Question;
+import in.shingole.common.Constants;
+import in.shingole.common.LoadDataCallback;
+import in.shingole.data.model.Worksheet;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link QuestionFragment.OnFragmentInteractionListener} interface
+ * {@link ViewWorksheetFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link QuestionFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
-public class QuestionFragment extends BaseFragment {
-  private static final String ARG_QUESTION = "question";
-  private Question question;
-  @InjectView(R.id.question_short_description) TextView questionLabel;
-  @InjectView(R.id.question_detail_container) LinearLayout questionDetailContainer;
+public class ViewWorksheetFragment extends BaseFragment {
+
+  public static final String FRAGMENT_TAG = "ViewWorksheetFragment";
+  private Worksheet worksheet;
+
+  @InjectView(R.id.label_worksheet_name) TextView worksheetName;
+  @InjectView(R.id.label_worksheet_description) TextView worksheetDescription;
 
   private OnFragmentInteractionListener mListener;
 
-  public QuestionFragment() {
+  public ViewWorksheetFragment() {
     // Required empty public constructor
   }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      question = (Question)getArguments().get(ARG_QUESTION);
-    }
+  public void setWorksheet(Worksheet worksheet) {
+    this.worksheet = worksheet;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View questionView = inflater.inflate(R.layout.fragment_question, container, false);
-    if (question != null) {
-      TextView shortDescription =
-          (TextView)questionView.findViewById(R.id.question_short_description);
-      shortDescription.setText(question.getShortDescription());
-    }
-    return questionView;
+    return inflater.inflate(R.layout.fragment_view_worksheet, container, false);
   }
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    ButterKnife.inject(this, view);
+    if (getArguments() != null && getArguments().getString(Constants.PARAM_WORKSHEET_ID) != null) {
+      mListener.loadWorksheet(getArguments().getString(Constants.PARAM_WORKSHEET_ID),
+          new LoadDataCallback<Worksheet>() {
+            @Override
+            public void onSuccess(Worksheet worksheet) {
+              renderWorksheet(worksheet);
+            }
 
+            @Override
+            public void onFailure(Exception ex, Object request) {
+              Toast.makeText(getActivity(), "An error occured while loading the worksheet",
+                  Toast.LENGTH_SHORT);
+            }
+          });
+    }
   }
 
-  // TODO: Rename method, update argument and hook method into UI event
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
-    }
+  public void renderWorksheet(Worksheet worksheet) {
+    this.worksheet = worksheet;
+    worksheetName.setText(worksheet.getName());
+    worksheetDescription.setText(worksheet.getDescription());
   }
 
   @Override
@@ -97,8 +105,7 @@ public class QuestionFragment extends BaseFragment {
    * >Communicating with Other Fragments</a> for more information.
    */
   public interface OnFragmentInteractionListener {
-    // TODO: Update argument type and name
-    public void onFragmentInteraction(Uri uri);
+    public void loadWorksheet(String worksheetId, LoadDataCallback<Worksheet> sheet);
   }
 
 }

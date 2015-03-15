@@ -40,6 +40,22 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".activity.ViewWorksheetActivity"
+            android:label="@string/title_activity_view_worksheet"
+            android:parentActivityName=".activity.DashboardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.shingole.activity.DashboardActivity" />
+        </activity>
+
+        <provider
+            android:name=".data.WorksheetContentProvider"
+            android:authorities="in.shingole.sheetmaker"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>

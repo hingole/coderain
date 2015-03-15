@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import in.shingole.R;
+import in.shingole.common.Constants;
 import in.shingole.data.model.TestData;
+import in.shingole.data.model.Worksheet;
 import in.shingole.fragment.DashboardFragment;
 import in.shingole.widget.LeftNavigationWidget;
 
@@ -15,6 +17,7 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
     implements DashboardFragment.OnFragmentInteractionListener {
   private DashboardFragment dashboardFragment;
   private static final int DESIGN_SHEET_REQUEST_CODE = 909;
+  private static final int VIEW_WORKSHEET_REQUEST_CODE = 809;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,14 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   @Override
   protected LeftNavigationWidget.NavigationType getNavigationType() {
     return LeftNavigationWidget.NavigationType.SHEETS;
+  }
+
+  @Override
+  public void openWorksheet(Worksheet worksheet) {
+    Intent intent = new Intent();
+    intent.setClass(this, ViewWorksheetActivity.class);
+    intent.putExtra(Constants.PARAM_WORKSHEET_ID, worksheet.getId());
+    startActivityForResult(intent, VIEW_WORKSHEET_REQUEST_CODE);
   }
 
   @Override

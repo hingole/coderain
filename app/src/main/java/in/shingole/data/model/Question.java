@@ -1,12 +1,16 @@
 package in.shingole.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * A class for representing a problem.
  */
-public class Question {
+public class Question implements Parcelable {
   private String id;
   private String category;
   private ProblemType type;
@@ -142,4 +146,71 @@ public class Question {
   public void setMultipleChoiceOptions(List<String> multipleChoiceOptions) {
     this.multipleChoiceOptions = multipleChoiceOptions;
   }
+
+  protected Question(Parcel in) {
+    id = in.readString();
+    category = in.readString();
+    type = (ProblemType) in.readValue(ProblemType.class.getClassLoader());
+    shortDescription = in.readString();
+    longDescription = in.readString();
+    long tmpDateCreated = in.readLong();
+    dateCreated = tmpDateCreated != -1 ? new Date(tmpDateCreated) : null;
+    long tmpDateSolved = in.readLong();
+    dateSolved = tmpDateSolved != -1 ? new Date(tmpDateSolved) : null;
+    difficultyLevel = (DifficultyLevel) in.readValue(DifficultyLevel.class.getClassLoader());
+    numAttempts = in.readInt();
+    maxAttempts = in.readInt();
+    shortAnswer = in.readString();
+    longAnswer = in.readString();
+    answerType = (AnswerType) in.readValue(AnswerType.class.getClassLoader());
+    hint = in.readString();
+    if (in.readByte() == 0x01) {
+      multipleChoiceOptions = new ArrayList<String>();
+      in.readList(multipleChoiceOptions, String.class.getClassLoader());
+    } else {
+      multipleChoiceOptions = null;
+    }
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(id);
+    dest.writeString(category);
+    dest.writeValue(type);
+    dest.writeString(shortDescription);
+    dest.writeString(longDescription);
+    dest.writeLong(dateCreated != null ? dateCreated.getTime() : -1L);
+    dest.writeLong(dateSolved != null ? dateSolved.getTime() : -1L);
+    dest.writeValue(difficultyLevel);
+    dest.writeInt(numAttempts);
+    dest.writeInt(maxAttempts);
+    dest.writeString(shortAnswer);
+    dest.writeString(longAnswer);
+    dest.writeValue(answerType);
+    dest.writeString(hint);
+    if (multipleChoiceOptions == null) {
+      dest.writeByte((byte) (0x00));
+    } else {
+      dest.writeByte((byte) (0x01));
+      dest.writeList(multipleChoiceOptions);
+    }
+  }
+
+  @SuppressWarnings("unused")
+  public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {
+    @Override
+    public Question createFromParcel(Parcel in) {
+      return new Question(in);
+    }
+
+    @Override
+    public Question[] newArray(int size) {
+      return new Question[size];
+    }
+  };
 }

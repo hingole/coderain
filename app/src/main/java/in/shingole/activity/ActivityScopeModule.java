@@ -14,6 +14,7 @@ import in.shingole.fragment.DashboardFragment;
 import in.shingole.fragment.NavigationDrawerFragment;
 import in.shingole.fragment.SheetDesignerFragment;
 import in.shingole.fragment.SplashFragment;
+import in.shingole.fragment.ViewWorksheetFragment;
 
 /**
  * Here it provides the dependencies those have same lifetime of one activity in your MyCoolApp
@@ -27,10 +28,12 @@ import in.shingole.fragment.SplashFragment;
         SheetDesignerFragment.class,
         DashboardFragment.class,
         NavigationDrawerFragment.class,
+        ViewWorksheetFragment.class,
         SplashActivity.class,
         AbstractNavigationDrawerActivity.class,
         DashboardActivity.class,
-        SheetDesignerActivity.class
+        SheetDesignerActivity.class,
+        ViewWorksheetActivity.class,
     }
 )
 public class ActivityScopeModule {
