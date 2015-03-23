@@ -10,13 +10,12 @@ import java.util.List;
 /**
  * A class for representing a problem.
  */
-public class Question implements Parcelable {
+public class Question extends BaseModel implements Parcelable {
   private String id;
   private String category;
   private ProblemType type;
   private String shortDescription;
   private String longDescription;
-  private Date dateCreated;
   private Date dateSolved;
   private DifficultyLevel difficultyLevel;
   private int numAttempts;
@@ -27,12 +26,8 @@ public class Question implements Parcelable {
   private String hint;
   private List<String> multipleChoiceOptions;
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
+  public Question() {
+    super();
   }
 
   public String getCategory() {
@@ -65,14 +60,6 @@ public class Question implements Parcelable {
 
   public void setLongDescription(String longDescription) {
     this.longDescription = longDescription;
-  }
-
-  public Date getDateCreated() {
-    return dateCreated;
-  }
-
-  public void setDateCreated(Date dateCreated) {
-    this.dateCreated = dateCreated;
   }
 
   public Date getDateSolved() {
@@ -148,13 +135,12 @@ public class Question implements Parcelable {
   }
 
   protected Question(Parcel in) {
-    id = in.readString();
+    super(in);
     category = in.readString();
     type = (ProblemType) in.readValue(ProblemType.class.getClassLoader());
     shortDescription = in.readString();
     longDescription = in.readString();
     long tmpDateCreated = in.readLong();
-    dateCreated = tmpDateCreated != -1 ? new Date(tmpDateCreated) : null;
     long tmpDateSolved = in.readLong();
     dateSolved = tmpDateSolved != -1 ? new Date(tmpDateSolved) : null;
     difficultyLevel = (DifficultyLevel) in.readValue(DifficultyLevel.class.getClassLoader());
@@ -179,12 +165,11 @@ public class Question implements Parcelable {
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(id);
+    super.writeToParcel(dest, flags);
     dest.writeString(category);
     dest.writeValue(type);
     dest.writeString(shortDescription);
     dest.writeString(longDescription);
-    dest.writeLong(dateCreated != null ? dateCreated.getTime() : -1L);
     dest.writeLong(dateSolved != null ? dateSolved.getTime() : -1L);
     dest.writeValue(difficultyLevel);
     dest.writeInt(numAttempts);

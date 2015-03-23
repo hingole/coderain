@@ -3,6 +3,7 @@ package in.shingole.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,12 +14,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import in.shingole.R;
 import in.shingole.activity.DashboardActivity;
 import in.shingole.activity.ViewWorksheetActivity;
 import in.shingole.common.BaseFragment;
+import in.shingole.data.WorksheetContentProviderContract;
+import in.shingole.data.adapters.WorksheetCursorAdapter;
 import in.shingole.data.adapters.WorksheetListAdapter;
 import in.shingole.data.model.Worksheet;
 
@@ -43,7 +47,8 @@ public class DashboardFragment extends BaseFragment {
   private String mParam2;
 
   private OnFragmentInteractionListener mListener;
-  private WorksheetListAdapter worksheetListAdapter;
+  private WorksheetCursorAdapter worksheetListAdapter;
+  private ListAdapter listAdapter;
 
   public DashboardFragment() {
     // Required empty public constructor
@@ -82,11 +87,14 @@ public class DashboardFragment extends BaseFragment {
     // Inflate the layout for this fragment
     View fragmentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
     final GridView gridview = (GridView) fragmentView.findViewById(R.id.dashboard_grid);
-    this.worksheetListAdapter = new WorksheetListAdapter(getActivity(), 0);
+    Uri uri = WorksheetContentProviderContract.CONTENT_URI;
+    Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+
+    this.worksheetListAdapter = new WorksheetCursorAdapter(getActivity(), cursor);
     gridview.setAdapter(worksheetListAdapter);
     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Worksheet item = worksheetListAdapter.getItem(position);
+        Worksheet item = (Worksheet)worksheetListAdapter.getItem(position);
         openWorksheet(item);
       }
     });
@@ -119,9 +127,9 @@ public class DashboardFragment extends BaseFragment {
     mListener = null;
   }
 
-  public WorksheetListAdapter getWorksheetListAdapter() {
-    return worksheetListAdapter;
-  }
+//  public WorksheetListAdapter getWorksheetListAdapter() {
+//    return worksheetListAdapter;
+//  }
 
   /**
    * This interface must be implemented by activities that contain this

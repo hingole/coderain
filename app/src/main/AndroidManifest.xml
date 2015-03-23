@@ -52,7 +52,7 @@
 
         <provider
             android:name=".data.WorksheetContentProvider"
-            android:authorities="in.shingole.sheetmaker"
+            android:authorities="in.shingole.sheetmaker.provider"
             android:enabled="true"
             android:exported="false" >
         </provider>

@@ -10,13 +10,16 @@ import java.util.List;
 /**
  * Worksheet class
  */
-public class Worksheet implements Parcelable {
+public class Worksheet extends BaseModel implements Parcelable {
   private String id;
   private String name;
   private String description;
-  private Date dateCreated;
   private String category;
   List<Question> questionList;
+
+  public Worksheet() {
+    super();
+  }
 
   public String getId() {
     return id;
@@ -42,14 +45,6 @@ public class Worksheet implements Parcelable {
     this.description = description;
   }
 
-  public Date getDateCreated() {
-    return dateCreated;
-  }
-
-  public void setDateCreated(Date dateCreated) {
-    this.dateCreated = dateCreated;
-  }
-
   public String getCategory() {
     return category;
   }
@@ -71,7 +66,6 @@ public class Worksheet implements Parcelable {
     name = in.readString();
     description = in.readString();
     long tmpDateCreated = in.readLong();
-    dateCreated = tmpDateCreated != -1 ? new Date(tmpDateCreated) : null;
     category = in.readString();
     if (in.readByte() == 0x01) {
       questionList = new ArrayList<Question>();
@@ -82,16 +76,11 @@ public class Worksheet implements Parcelable {
   }
 
   @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
   public void writeToParcel(Parcel dest, int flags) {
+    super.writeToParcel(dest, flags);
     dest.writeString(id);
     dest.writeString(name);
     dest.writeString(description);
-    dest.writeLong(dateCreated != null ? dateCreated.getTime() : -1L);
     dest.writeString(category);
     if (questionList == null) {
       dest.writeByte((byte) (0x00));

@@ -33,6 +33,7 @@ public class TestData {
     question1.setAnswerType(AnswerType.BLANK);
     question1.setCategory("MATHS");
     question1.setDateCreated(new Date());
+    question1.setType(ProblemType.COUNTING_OBJECTS);
     question1.setDifficultyLevel(DifficultyLevel.BEGINNER);
     question1.setHint("Just count the number of items");
     question1.setShortDescription("Count the number of objects");
@@ -44,6 +45,7 @@ public class TestData {
     question2.setAnswerType(AnswerType.BLANK);
     question2.setCategory("MATHS");
     question2.setDateCreated(new Date());
+    question2.setType(ProblemType.COUNTING_OBJECTS);
     question2.setDifficultyLevel(DifficultyLevel.BEGINNER);
     question2.setHint("Just count the number of items");
     question2.setShortDescription("Count the number of objects");

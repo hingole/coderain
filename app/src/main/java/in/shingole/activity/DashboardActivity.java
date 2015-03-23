@@ -72,7 +72,7 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   @Override
   public void loadData() {
     // Do nothing for now.
-    dashboardFragment.getWorksheetListAdapter().setData(TestData.sampleWorksheet());
+    //dashboardFragment.getWorksheetListAdapter().setData(TestData.sampleWorksheet());
   }
 
 }
