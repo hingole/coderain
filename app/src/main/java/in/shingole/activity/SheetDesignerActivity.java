@@ -1,20 +1,13 @@
 package in.shingole.activity;
 
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import in.shingole.R;
 import in.shingole.common.BaseActivity;
-import in.shingole.fragment.DashboardFragment;
 import in.shingole.fragment.SheetDesignerFragment;
-import in.shingole.fragment.SplashFragment;
-import in.shingole.widget.LeftNavigationWidget;
 
 public class SheetDesignerActivity extends BaseActivity
     implements SheetDesignerFragment.OnFragmentInteractionListener {
@@ -31,7 +24,7 @@ public class SheetDesignerActivity extends BaseActivity
   }
 
   @Override
-  protected Object[] geActivitytModules() {
+  protected Object[] getActivityModules() {
     return new Object[]{
         new ActivityScopeModule(this),
     };

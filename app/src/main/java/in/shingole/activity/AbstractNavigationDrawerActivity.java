@@ -1,14 +1,9 @@
 package in.shingole.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import in.shingole.R;
 import in.shingole.common.BaseActivity;
@@ -115,15 +110,15 @@ public abstract class AbstractNavigationDrawerActivity extends BaseActivity
   // This should be overridden by concrete classes.
   protected abstract LeftNavigationWidget.NavigationType getNavigationType();
 
-  private void initNavigationListeners() {
-    navigation.setNavigationListListener(new LeftNavigationWidget.NavigationListener() {
-      @Override
-      public void intentsSelected(LeftNavigationWidget.NavigationType navType) {
-        drawerLayout.closeDrawers();
-        startSelectedActivity(navType);
-      }
-    });
-  }
+//  private void initNavigationListeners() {
+//    navigation.setNavigationListListener(new LeftNavigationWidget.NavigationListener() {
+//      @Override
+//      public void intentsSelected(LeftNavigationWidget.NavigationType navType) {
+//        drawerLayout.closeDrawers();
+//        startSelectedActivity(navType);
+//      }
+//    });
+//  }
 
   private void startSelectedActivity(LeftNavigationWidget.NavigationType navType) {
     // TODO(shingole): Fill this up.
@@ -143,7 +138,7 @@ public abstract class AbstractNavigationDrawerActivity extends BaseActivity
   }
 
   @Override
-  protected Object[] geActivitytModules() {
+  protected Object[] getActivityModules() {
     return new Object[]{
         new ActivityScopeModule(this),
     };

@@ -12,7 +12,7 @@ import java.util.List;
 public class TestData {
 
   public static List<Worksheet> sampleWorksheet() {
-    ArrayList<Worksheet> sheets = new ArrayList<Worksheet>();
+    ArrayList<Worksheet> sheets = new ArrayList<>();
     for (int i = 0; i < 40; i++) {
       Worksheet worksheet1 = new Worksheet();
       worksheet1.setId("W" + i);

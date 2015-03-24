@@ -1,7 +1,5 @@
 package in.shingole.activity;
 
-import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,12 +8,10 @@ import javax.inject.Inject;
 
 import in.shingole.R;
 import in.shingole.common.BaseActivity;
-import in.shingole.common.Constants;
 import in.shingole.common.LoadDataCallback;
 import in.shingole.data.WorksheetService;
 import in.shingole.data.model.Worksheet;
 import in.shingole.fragment.ViewWorksheetFragment;
-import in.shingole.widget.LeftNavigationWidget;
 
 public class ViewWorksheetActivity extends BaseActivity
     implements ViewWorksheetFragment.OnFragmentInteractionListener {
@@ -35,7 +31,7 @@ public class ViewWorksheetActivity extends BaseActivity
   }
 
   @Override
-  protected Object[] geActivitytModules() {
+  protected Object[] getActivityModules() {
     return new Object[]{
         new ActivityScopeModule(this),
     };

@@ -1,7 +1,6 @@
 package in.shingole.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -11,43 +10,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import in.shingole.R;
 import in.shingole.common.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SplashFragment.SplashEventsListener} interface
- * to handle interaction events.
- * Use the {@link SplashFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Splash screen fragment
  */
 public class SplashFragment extends BaseFragment {
 
+  public static final String FRAGMENT_TAG = "SplashFragment";
+
   private SplashEventsListener mListener;
+  @InjectView(R.id.app_subtext) TextView introTextView;
 
   public SplashFragment() {
     super();
   }
 
-  /**
-   * Use this factory method to create a new instance of
-   * this fragment using the provided parameters.
-   *
-   * @return A new instance of fragment SplashFragment.
-   */
-  // TODO: Rename and change types and number of parameters
-  public static SplashFragment newInstance() {
-    SplashFragment fragment = new SplashFragment();
-    return fragment;
-  }
-
   @Override
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-
-    String appSubText = "Brought to you by <a href=\"https://twitter.com/hingole\">@hingole</a>";
-    TextView introTextView = getView(R.id.app_subtext);
+    ButterKnife.inject(this, view);
+    String appSubText = "Sheets made <b>easy</b>";
     introTextView.setMovementMethod(LinkMovementMethod.getInstance());
     introTextView.setText(Html.fromHtml(appSubText));
   }
@@ -88,18 +74,7 @@ public class SplashFragment extends BaseFragment {
     mListener = null;
   }
 
-  /**
-   * This interface must be implemented by activities that contain this
-   * fragment to allow an interaction in this fragment to be communicated
-   * to the activity and potentially other fragments contained in that
-   * activity.
-   * <p/>
-   * See the Android Training lesson <a href=
-   * "http://developer.android.com/training/basics/fragments/communicating.html"
-   * >Communicating with Other Fragments</a> for more information.
-   */
   public interface SplashEventsListener {
     public void onCreateNewWorksheetTapped();
   }
-
 }

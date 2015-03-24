@@ -2,21 +2,17 @@ package in.shingole.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.UriMatcher;
-import android.content.pm.PathPermission;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 
-import in.shingole.data.model.TestData;
-import in.shingole.data.model.Worksheet;
 import in.shingole.data.sqlite.Tables;
 import in.shingole.data.sqlite.WorksheetSQLiteHelper;
 
@@ -28,7 +24,7 @@ public class WorksheetContentProvider extends ContentProvider {
   enum WorksheetURIMatchingCodes {
     NO_MATCH,
     WORKSHEETS_CODE,
-    WORKSHEET_ID;
+    WORKSHEET_ID
   }
 
 
@@ -89,12 +85,9 @@ public class WorksheetContentProvider extends ContentProvider {
         cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         break;
       case 2:
-        ArrayList<String> selectionArgList = new ArrayList<>();
-        if (selectionArgs != null) {
-          for (String s : selectionArgs) {
-            selectionArgList.add(s);
-          }
-        }
+        ArrayList<String> selectionArgList = selectionArgs == null
+            ? Lists.<String>newArrayList()
+            : Lists.newArrayList(selectionArgs);
         selectionArgList.add(uri.getLastPathSegment());
         qb.setTables(Tables.WorksheetTable.TABLE_NAME);
         qb.appendWhere(Tables.WorksheetTable._ID + " = ? ");

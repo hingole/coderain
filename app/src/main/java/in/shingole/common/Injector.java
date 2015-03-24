@@ -8,10 +8,11 @@ import dagger.ObjectGraph;
 public interface Injector {
   /**
    * Inject to <code>object</code>
-   *
-   * @param object
    */
   void inject(Object object);
 
+  /**
+   * Returns the object graph. Can be used for lazy injection.
+   */
   ObjectGraph getObjectGraph();
 }

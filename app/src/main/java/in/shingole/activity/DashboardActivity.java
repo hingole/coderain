@@ -1,15 +1,12 @@
 package in.shingole.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import in.shingole.R;
 import in.shingole.common.Constants;
-import in.shingole.data.model.TestData;
-import in.shingole.data.model.Worksheet;
 import in.shingole.fragment.DashboardFragment;
 import in.shingole.widget.LeftNavigationWidget;
 
@@ -62,17 +59,11 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   }
 
   @Override
-  public void openWorksheet(Worksheet worksheet) {
+  public void openWorksheet(String worksheetId) {
     Intent intent = new Intent();
     intent.setClass(this, ViewWorksheetActivity.class);
-    intent.putExtra(Constants.PARAM_WORKSHEET_ID, worksheet.getId());
+    intent.putExtra(Constants.PARAM_WORKSHEET_ID, worksheetId);
     startActivityForResult(intent, VIEW_WORKSHEET_REQUEST_CODE);
-  }
-
-  @Override
-  public void loadData() {
-    // Do nothing for now.
-    //dashboardFragment.getWorksheetListAdapter().setData(TestData.sampleWorksheet());
   }
 
 }

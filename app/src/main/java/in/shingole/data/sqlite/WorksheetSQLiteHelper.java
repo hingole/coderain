@@ -1,14 +1,13 @@
 package in.shingole.data.sqlite;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
 import android.database.sqlite.SQLiteStatement;
 import android.text.TextUtils;
 
 import com.google.common.collect.ImmutableList;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,10 +54,10 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
     List<Worksheet> worksheets = TestData.sampleWorksheet();
     for (Worksheet worksheet : worksheets) {
       long worksheetId = insertWorksheet(db, worksheet);
-      worksheet.setId((new Long(worksheetId)).toString());
+      worksheet.setId(Long.toString(worksheetId));
       for (Question question : worksheet.getQuestionList()) {
         long questionId = insertQuestion(db, question);
-        question.setId((new Long(questionId).toString()));
+        question.setId((Long.toString(questionId)));
       }
       insertWorksheetQuestions(db, worksheet);
     }
@@ -74,7 +73,8 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
       stmt.bindLong(1, sheetId);
       Long questionId = Long.valueOf(question.getId());
       stmt.bindLong(2, questionId);
-      stmt.executeInsert();
+      Long id = stmt.executeInsert();
+      question.setId(Long.toString(id));
     }
   }
 

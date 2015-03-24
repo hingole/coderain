@@ -14,6 +14,8 @@ public abstract class BaseFragment extends Fragment {
     HIDDEN,
   }
 
+  private ViewState viewState;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -24,8 +26,11 @@ public abstract class BaseFragment extends Fragment {
 
   public void setViewState(ViewState viewState) {
     // Derived classes should override this.
+    // Appropriate view should be rendered based on the state.
+    this.viewState = viewState;
   }
-  protected <T> T getView(int id) {
-    return (T) getView().findViewById(id);
+
+  public ViewState getViewState() {
+    return viewState;
   }
 }

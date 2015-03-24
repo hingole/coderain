@@ -7,12 +7,12 @@ import android.support.v4.app.FragmentActivity;
 import com.google.common.base.Preconditions;
 
 /**
- * Created by shingole on 3/8/15.
+ * Common utilities.
  */
 public class Utils {
 
   public static String getLogTag(Class<?> clazz) {
-    return "rugbyadmin-" + clazz.getSimpleName();
+    return "sheetmaker-" + clazz.getSimpleName();
   }
 
   /**

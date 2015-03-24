@@ -14,7 +14,7 @@ import java.util.Map;
 import in.shingole.R;
 
 /**
- * Created by shingole on 1/12/15.
+ * Left navigation menu.
  */
 public class LeftNavigationWidget extends LinearLayout {
 

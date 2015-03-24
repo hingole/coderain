@@ -3,22 +3,15 @@ package in.shingole.fragment;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import in.shingole.R;
 import in.shingole.common.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SheetDesignerFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SheetDesignerFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to render sheet designer
  */
 public class SheetDesignerFragment extends BaseFragment {
 
@@ -45,8 +38,7 @@ public class SheetDesignerFragment extends BaseFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View fragmentView = inflater.inflate(R.layout.fragment_sheet_designer, container, false);
-    return fragmentView;
+    return inflater.inflate(R.layout.fragment_sheet_designer, container, false);
   }
 
   // TODO: Rename method, update argument and hook method into UI event

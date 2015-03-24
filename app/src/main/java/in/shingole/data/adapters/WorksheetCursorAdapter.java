@@ -10,15 +10,12 @@ import android.widget.TextView;
 
 import in.shingole.R;
 import in.shingole.data.WorksheetContentProviderContract;
-import in.shingole.data.model.Worksheet;
 
 /**
  * Cursor adapter for worksheet.
  */
 public class WorksheetCursorAdapter extends SimpleCursorAdapter {
   private final LayoutInflater inflater;
-
-  private Cursor cursor;
 
   public WorksheetCursorAdapter(Context context,
                                 Cursor cursor) {
@@ -46,7 +43,7 @@ public class WorksheetCursorAdapter extends SimpleCursorAdapter {
     }
 
     Cursor item = (Cursor)super.getItem(position);
-    String worksheetId = item.getString(1);
+    //String worksheetId = item.getString(1);
     String worksheetName = item.getString(2);
     //((ImageView)view.findViewById(R.id.icon)).setImageDrawable(item.getIcon());
     ((TextView)view.findViewById(R.id.label_worksheet_name)).setText(worksheetName);

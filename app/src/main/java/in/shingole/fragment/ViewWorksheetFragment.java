@@ -1,9 +1,8 @@
 package in.shingole.fragment;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,8 +63,10 @@ public class ViewWorksheetFragment extends BaseFragment {
 
             @Override
             public void onFailure(Exception ex, Object request) {
-              Toast.makeText(getActivity(), "An error occured while loading the worksheet",
+              Toast toast = Toast.makeText(getActivity(),
+                  "An error occurred while loading the worksheet",
                   Toast.LENGTH_SHORT);
+              toast.show();
             }
           });
     }
@@ -73,8 +74,12 @@ public class ViewWorksheetFragment extends BaseFragment {
 
   public void renderWorksheet(Worksheet worksheet) {
     this.worksheet = worksheet;
-    worksheetName.setText(worksheet.getName());
-    worksheetDescription.setText(worksheet.getDescription());
+    if (worksheet != null) {
+      worksheetName.setText(worksheet.getName());
+      worksheetDescription.setText(worksheet.getDescription());
+    } else {
+      worksheetName.setText("Invalid worksheet");
+    }
   }
 
   @Override
@@ -95,14 +100,7 @@ public class ViewWorksheetFragment extends BaseFragment {
   }
 
   /**
-   * This interface must be implemented by activities that contain this
-   * fragment to allow an interaction in this fragment to be communicated
-   * to the activity and potentially other fragments contained in that
-   * activity.
-   * <p/>
-   * See the Android Training lesson <a href=
-   * "http://developer.android.com/training/basics/fragments/communicating.html"
-   * >Communicating with Other Fragments</a> for more information.
+   * Fragment interface.
    */
   public interface OnFragmentInteractionListener {
     public void loadWorksheet(String worksheetId, LoadDataCallback<Worksheet> sheet);

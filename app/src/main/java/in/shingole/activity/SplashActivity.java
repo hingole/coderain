@@ -16,15 +16,11 @@ public class SplashActivity extends BaseActivity implements SplashFragment.Splas
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     actionBar.hide();
-    if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction()
-          .add(getContentFrameId(), SplashFragment.newInstance())
-          .commit();
-    }
+    super.addFragment(SplashFragment.FRAGMENT_TAG, SplashFragment.class, savedInstanceState);
   }
 
   @Override
-  protected Object[] geActivitytModules() {
+  protected Object[] getActivityModules() {
     return new Object[]{
         new ActivityScopeModule(this),
     };

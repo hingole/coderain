@@ -21,9 +21,9 @@ public abstract class DaggerApplication extends Application implements Injector 
     AndroidAppModule sharedAppModule = new AndroidAppModule();
 
     // bootstrap. So that it allows no-arg constructor in AndroidAppModule
-    sharedAppModule.sApplicationContext = this.getApplicationContext();
+    AndroidAppModule.applicationContext = this.getApplicationContext();
 
-    List<Object> modules = new ArrayList<Object>();
+    List<Object> modules = new ArrayList<>();
     modules.add(sharedAppModule);
     //modules.add(new UserAccountModule());
     //modules.add(new ThreadingModule());

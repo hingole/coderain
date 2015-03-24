@@ -12,6 +12,6 @@
         android:layout_height="@dimen/default_navigation_list_item_height"
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/default_side_padding"/>
+        android:paddingStart="@dimen/default_side_padding"/>
 
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,10 +64,9 @@ public class Worksheet extends BaseModel implements Parcelable {
     id = in.readString();
     name = in.readString();
     description = in.readString();
-    long tmpDateCreated = in.readLong();
     category = in.readString();
     if (in.readByte() == 0x01) {
-      questionList = new ArrayList<Question>();
+      questionList = new ArrayList<>();
       in.readList(questionList, Question.class.getClassLoader());
     } else {
       questionList = null;

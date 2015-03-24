@@ -4,7 +4,7 @@
     tools:context="in.shingole.activity.DashboardActivity">
     <item android:id="@+id/action_add" android:title="@string/menu_newworksheet"
         android:icon="@drawable/ic_action_new"
-        android:orderInCategory="100" app:showAsAction="always" />
+        android:orderInCategory="100" app:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />

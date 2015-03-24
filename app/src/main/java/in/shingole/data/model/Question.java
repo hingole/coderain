@@ -11,7 +11,6 @@ import java.util.List;
  * A class for representing a problem.
  */
 public class Question extends BaseModel implements Parcelable {
-  private String id;
   private String category;
   private ProblemType type;
   private String shortDescription;
@@ -140,7 +139,6 @@ public class Question extends BaseModel implements Parcelable {
     type = (ProblemType) in.readValue(ProblemType.class.getClassLoader());
     shortDescription = in.readString();
     longDescription = in.readString();
-    long tmpDateCreated = in.readLong();
     long tmpDateSolved = in.readLong();
     dateSolved = tmpDateSolved != -1 ? new Date(tmpDateSolved) : null;
     difficultyLevel = (DifficultyLevel) in.readValue(DifficultyLevel.class.getClassLoader());
@@ -151,7 +149,7 @@ public class Question extends BaseModel implements Parcelable {
     answerType = (AnswerType) in.readValue(AnswerType.class.getClassLoader());
     hint = in.readString();
     if (in.readByte() == 0x01) {
-      multipleChoiceOptions = new ArrayList<String>();
+      multipleChoiceOptions = new ArrayList<>();
       in.readList(multipleChoiceOptions, String.class.getClassLoader());
     } else {
       multipleChoiceOptions = null;

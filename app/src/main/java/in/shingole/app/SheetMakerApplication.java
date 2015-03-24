@@ -6,7 +6,7 @@ import java.util.List;
 import in.shingole.common.DaggerApplication;
 
 /**
- * Created by shingole on 3/7/15.
+ * Application class
  */
 public class SheetMakerApplication extends DaggerApplication {
 

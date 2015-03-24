@@ -36,7 +36,7 @@ public abstract class BaseActivity
 
     // Create the activity graph by .plus-ing our modules onto the application graph.
     DaggerApplication application = (DaggerApplication) getApplication();
-    mActivityGraph = application.getObjectGraph().plus(geActivitytModules());
+    mActivityGraph = application.getObjectGraph().plus(getActivityModules());
 
     // Inject ourselves so subclasses will have dependencies fulfilled when this method returns.
     mActivityGraph.inject(this);
@@ -97,5 +97,5 @@ public abstract class BaseActivity
     return mActivityGraph;
   }
 
-  protected abstract Object[] geActivitytModules();
+  protected abstract Object[] getActivityModules();
 }

@@ -17,7 +17,7 @@ import dagger.Provides;
 )
 public class AndroidAppModule {
 
-  /* package */ static Context sApplicationContext = null;
+  /* package */ static Context applicationContext = null;
 
   /**
    * Allow the application context to be injected but require that it be annotated with
@@ -27,13 +27,13 @@ public class AndroidAppModule {
   @Singleton
   @ForApplication
   Context provideApplicationContext() {
-    return sApplicationContext;
+    return applicationContext;
   }
 
   @Provides
   @Singleton
   LocationManager provideLocationManager() {
-    return (LocationManager) sApplicationContext.getSystemService(Context.LOCATION_SERVICE);
+    return (LocationManager) applicationContext.getSystemService(Context.LOCATION_SERVICE);
   }
 
   /*@Provides @Singleton

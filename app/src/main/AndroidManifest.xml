@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.shingole" >
-
+    <android:supportsRtl />
     <application
         android:name=".app.SheetMakerApplication"
         android:allowBackup="true"
@@ -34,12 +34,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="in.shingole.activity.DashboardActivity" />
         </activity>
-
-        <service
-            android:name=".WorksheetService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
 
         <activity
             android:name=".activity.ViewWorksheetActivity"
