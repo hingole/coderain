@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imgItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:layout_width="180dp"
-        android:text="Worksheet 1"
-        android:id="@+id/label_worksheet_name"
-        android:padding="20dp"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:drawableTop="@drawable/ic_launcher"
+    android:textAlignment="center"
+    android:drawablePadding="15dp"
+    android:text="Worksheet"
+    android:id="@+id/label_worksheet_name"
+    android:padding="20dp"
+    android:layout_height="wrap_content"/>

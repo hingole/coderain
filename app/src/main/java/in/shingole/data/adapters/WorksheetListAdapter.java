@@ -23,11 +23,6 @@ public class WorksheetListAdapter extends ArrayAdapter<Worksheet> {
     inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
-  @Override
-  public int getCount() {
-    return super.getCount();
-  }
-
   public void setData(List<Worksheet> data) {
     clear();
     if (data != null) {

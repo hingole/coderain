@@ -12,7 +12,7 @@ import in.shingole.R;
  * A template widget for navigation list item.
  */
 public class NavigationItemWidget extends LinearLayout {
-  View v;
+  private View v;
   private LeftNavigationWidget.NavigationType navigationType = null;
   private TextView textView;
 

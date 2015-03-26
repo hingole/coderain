@@ -26,11 +26,6 @@ public abstract class BaseActivity
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
-  }
-
-  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 

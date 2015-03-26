@@ -18,11 +18,11 @@ import in.shingole.R;
  */
 public class LeftNavigationWidget extends LinearLayout {
 
-  private static List<NavigationType> navigationTypes = Arrays.asList(NavigationType.SHEETS,
+  private static final List<NavigationType> navigationTypes = Arrays.asList(NavigationType.SHEETS,
       NavigationType.SETTINGS);
   private NavigationListener listener;
   private NavigationType active;
-  private Map<NavigationType, NavigationItemWidget> navigationItems = new HashMap<>();
+  private final Map<NavigationType, NavigationItemWidget> navigationItems = new HashMap<>();
   private View settingsDivider;
 
   public LeftNavigationWidget(Context context) {

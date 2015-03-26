@@ -1,7 +1,6 @@
 package in.shingole.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListAdapter;
 
 import in.shingole.R;
 import in.shingole.common.BaseFragment;
@@ -29,11 +27,6 @@ public class DashboardFragment extends BaseFragment {
 
   public DashboardFragment() {
     // Required empty public constructor
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
   }
 
   @Override
@@ -58,10 +51,6 @@ public class DashboardFragment extends BaseFragment {
 
   private void openWorksheet(String sheetId) {
     mListener.openWorksheet(sheetId);
-  }
-  @Override
-  public void onResume() {
-    super.onResume();
   }
 
   @Override

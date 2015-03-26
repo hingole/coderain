@@ -25,7 +25,7 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
 
   // The name of the database file on the file system
   public static final String DATABASE_NAME = "SheetMaker.db";
-  private java.text.DateFormat df;
+  private final java.text.DateFormat df;
 
   public WorksheetSQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);

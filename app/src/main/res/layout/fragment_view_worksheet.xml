@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text=""
             android:id="@+id/label_worksheet_name"
             android:layout_gravity="center_horizontal|top"/>
 
@@ -21,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
             android:id="@+id/label_worksheet_description"
             android:layout_gravity="center_horizontal|top"/>
     </LinearLayout>
