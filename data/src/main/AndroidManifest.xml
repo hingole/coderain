@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.google.experimental.worksheetdata">
+
+    <application android:allowBackup="true"
+                 android:label="@string/app_name"
+                 android:icon="@drawable/ic_launcher"
+        >
+        <provider
+            android:name="in.shingole.maker.data.provider.WorksheetContentProvider"
+            android:authorities="in.shingole.sheetmaker.provider"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
+      </application>
+
+</manifest>

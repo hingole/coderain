@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
-    <in.shingole.widget.LeftNavigationWidget
+    <in.shingole.maker.widget.LeftNavigationWidget
         android:id="@+id/left_navigation_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

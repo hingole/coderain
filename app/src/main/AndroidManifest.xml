@@ -3,7 +3,7 @@
     package="in.shingole" >
     <android:supportsRtl  />
     <application
-        android:name=".app.SheetMakerApplication"
+        android:name=".maker.app.SheetMakerApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".maker.activity.SplashActivity"
             android:configChanges="keyboard|orientation|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>
@@ -23,33 +23,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DashboardActivity"
+            android:name=".maker.activity.DashboardActivity"
             android:label="@string/title_activity_filelist" >
         </activity>
         <activity
-            android:name=".activity.SheetDesignerActivity"
+            android:name=".maker.activity.SheetDesignerActivity"
             android:label="@string/title_activity_sheet_designer"
-            android:parentActivityName=".activity.DashboardActivity" >
+            android:parentActivityName=".maker.activity.DashboardActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.shingole.activity.DashboardActivity" />
+                android:value=".maker.activity.DashboardActivity" />
         </activity>
 
         <activity
-            android:name=".activity.ViewWorksheetActivity"
+            android:name=".maker.activity.ViewWorksheetActivity"
             android:label="@string/title_activity_view_worksheet"
-            android:parentActivityName=".activity.DashboardActivity" >
+            android:parentActivityName=".maker.activity.DashboardActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.shingole.activity.DashboardActivity" />
+                android:value=".maker.activity.DashboardActivity" />
         </activity>
-
-        <provider
-            android:name=".data.WorksheetContentProvider"
-            android:authorities="in.shingole.sheetmaker.provider"
-            android:enabled="true"
-            android:exported="false" >
-        </provider>
     </application>
 
 </manifest>

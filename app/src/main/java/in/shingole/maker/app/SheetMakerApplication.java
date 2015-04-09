@@ -1,0 +1,43 @@
+package in.shingole.maker.app;
+
+import android.content.pm.ApplicationInfo;
+import android.os.StrictMode;
+
+import java.util.Collections;
+import java.util.List;
+
+import dagger.ObjectGraph;
+import in.shingole.maker.common.DaggerApplication;
+
+/**
+ * Application class
+ */
+public class SheetMakerApplication extends DaggerApplication {
+
+  private ObjectGraph mObjectGraph;
+
+  @Override
+  public void onCreate() {
+    boolean isDebuggable = (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE));
+    if (isDebuggable) {
+      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+          .detectDiskReads()
+          .detectDiskWrites()
+          .detectNetwork()   // or .detectAll() for all detectable problems
+          .penaltyLog()
+          .build());
+      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+          .detectLeakedSqlLiteObjects()
+          .detectLeakedClosableObjects()
+          .penaltyLog()
+          .penaltyDeath()
+          .build());
+    }
+    super.onCreate();
+  }
+
+  @Override
+  protected List<Object> getAppModules() {
+    return Collections.<Object>singletonList(new SheetMakerAppScopeModule());
+  }
+}
