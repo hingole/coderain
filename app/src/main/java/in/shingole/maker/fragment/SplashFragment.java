@@ -23,9 +23,10 @@ public class SplashFragment extends BaseFragment {
 
   private SplashEventsListener mListener;
   @InjectView(R.id.app_subtext) TextView introTextView;
+  @InjectView(R.id.createNewWorksheet) Button createNewWorksheet;
 
   public SplashFragment() {
-    super();
+    super(R.layout.fragment_splash);
   }
 
   @Override
@@ -35,16 +36,6 @@ public class SplashFragment extends BaseFragment {
     String appSubText = "Sheets made <b>easy</b>";
     introTextView.setMovementMethod(LinkMovementMethod.getInstance());
     introTextView.setText(Html.fromHtml(appSubText));
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    super.onCreateView(inflater, container, savedInstanceState);
-    // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_splash, container, false);
-    Button createNewWorksheet = (Button) view.findViewById(R.id.createNewWorksheet);
-
     createNewWorksheet.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -53,7 +44,6 @@ public class SplashFragment extends BaseFragment {
         }
       }
     });
-    return view;
   }
 
   @Override

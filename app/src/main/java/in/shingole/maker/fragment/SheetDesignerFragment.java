@@ -25,6 +25,10 @@ public class SheetDesignerFragment extends BaseFragment {
 
   private OnFragmentInteractionListener mListener;
 
+  public SheetDesignerFragment() {
+    super(R.layout.fragment_sheet_designer);
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,12 +36,6 @@ public class SheetDesignerFragment extends BaseFragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_sheet_designer, container, false);
   }
 
   // TODO: Rename method, update argument and hook method into UI event

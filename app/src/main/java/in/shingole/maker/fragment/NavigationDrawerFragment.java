@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import butterknife.InjectView;
 import in.shingole.R;
 import in.shingole.maker.widget.LeftNavigationWidget;
 
@@ -38,6 +39,7 @@ public class NavigationDrawerFragment extends BaseFragment {
    * expands it. This shared preference tracks this.
    */
   private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+  @InjectView(R.id.left_navigation_widget)
   protected LeftNavigationWidget navigation;
   /**
    * A pointer to the current callbacks instance (the Activity).
@@ -56,6 +58,7 @@ public class NavigationDrawerFragment extends BaseFragment {
   private boolean mUserLearnedDrawer;
 
   public NavigationDrawerFragment() {
+    super(R.layout.navigation_list);
   }
 
   @Override
@@ -93,19 +96,13 @@ public class NavigationDrawerFragment extends BaseFragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-
-    View navigationList = inflater.inflate(R.layout.navigation_list,
-        container, false);
-    navigation = (LeftNavigationWidget) navigationList
-        .findViewById(R.id.left_navigation_widget);
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
     if (mCallbacks != null) {
       navigation.setActiveNavigation(mCallbacks.getActiveNavigationType());
     }
 
     initNavigationListeners();
-    return navigationList;
   }
 
   public boolean isDrawerOpen() {

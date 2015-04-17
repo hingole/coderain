@@ -26,7 +26,7 @@ public class QuestionFragment extends BaseFragment {
   private OnFragmentInteractionListener mListener;
 
   public QuestionFragment() {
-    // Required empty public constructor
+    super(R.layout.fragment_question);
   }
 
   @Override
@@ -38,21 +38,11 @@ public class QuestionFragment extends BaseFragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    View questionView = inflater.inflate(R.layout.fragment_question, container, false);
-    if (question != null) {
-      TextView shortDescription =
-          (TextView)questionView.findViewById(R.id.question_short_description);
-      shortDescription.setText(question.getShortDescription());
-    }
-    return questionView;
-  }
-
-  @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
+    super.onViewCreated(view, savedInstanceState);
+    if (question != null) {
+      questionLabel.setText(question.getShortDescription());
+    }
   }
 
   // TODO: Rename method, update argument and hook method into UI event

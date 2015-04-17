@@ -1,4 +1,4 @@
-package in.shingole.worksheetmaker;
+package in.shingole.maker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
