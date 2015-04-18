@@ -41,6 +41,10 @@ public class SheetDesignerFragment extends BaseFragment {
           "English Sight Words",
           "Sentence Completion");
 
+  public SheetDesignerFragment() {
+    super(R.layout.fragment_sheet_designer);
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,15 +54,6 @@ public class SheetDesignerFragment extends BaseFragment {
     }
     ArrayAdapter<String> worksheetTemplates =
             new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, templates);
-  }
-
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_sheet_designer, container, false);
-    ButterKnife.inject(this, view);
-    return view;
   }
 
   // TODO: Rename method, update argument and hook method into UI event

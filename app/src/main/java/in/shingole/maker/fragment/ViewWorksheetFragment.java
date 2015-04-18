@@ -43,7 +43,7 @@ public class ViewWorksheetFragment extends BaseFragment
   private OnFragmentInteractionListener mListener;
 
   public ViewWorksheetFragment() {
-    super();
+    super(R.layout.fragment_view_worksheet);
   }
 
   public void setWorksheet(Worksheet worksheet) {
@@ -51,22 +51,9 @@ public class ViewWorksheetFragment extends BaseFragment
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_view_worksheet, container, false);
-  }
-
-  @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     getLoaderManager().initLoader(Constants.WORKSHEET_DETAIL_LOADER_ID, getArguments(), this);
-  }
-
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    ButterKnife.inject(this, view);
   }
 
   public void renderWorksheet() {

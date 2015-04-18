@@ -35,16 +35,9 @@ public class DashboardFragment extends BaseFragment
   @Inject WorksheetListQuery worksheetListQuery;
   @InjectView(R.id.dashboard_grid) GridView gridview;
 
-  public DashboardFragment() {
-    // Required empty public constructor
-  }
-
   @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View fragmentView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-    ButterKnife.inject(this, fragmentView);
-
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
     this.worksheetCursorAdapter = new WorksheetCursorAdapter(getActivity());
     gridview.setAdapter(worksheetCursorAdapter);
     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,7 +47,10 @@ public class DashboardFragment extends BaseFragment
         openWorksheet(item.getWorksheet().getId());
       }
     });
-    return fragmentView;
+  }
+
+  public DashboardFragment() {
+    super(R.layout.fragment_dashboard);
   }
 
   @Override
@@ -83,7 +79,6 @@ public class DashboardFragment extends BaseFragment
     super.onDetach();
     mListener = null;
   }
-
 
   @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
