@@ -1,10 +1,12 @@
 package in.shingole.maker.activity;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 import dagger.ObjectGraph;
 import in.shingole.R;
@@ -12,6 +14,7 @@ import in.shingole.maker.common.Utils;
 import in.shingole.maker.common.ActivityScopeModule;
 import in.shingole.maker.common.DaggerApplication;
 import in.shingole.maker.common.Injector;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity
     extends ActionBarActivity
@@ -44,6 +47,11 @@ public abstract class BaseActivity
     initActionBar();
   }
 
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
+
   protected int getContentFrameId() {
     return R.id.content_frame;
   }
@@ -60,6 +68,11 @@ public abstract class BaseActivity
           fragment, fragmentTag).commit();
     }
     return fragment;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    return super.onOptionsItemSelected(item);
   }
 
   private void initActionBar() {

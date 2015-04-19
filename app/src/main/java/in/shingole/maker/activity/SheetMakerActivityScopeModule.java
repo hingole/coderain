@@ -2,6 +2,7 @@ package in.shingole.maker.activity;
 
 import dagger.Module;
 import in.shingole.maker.app.SheetMakerAppScopeModule;
+import in.shingole.maker.fragment.CreateCountingWorksheetFragment;
 import in.shingole.maker.fragment.DashboardFragment;
 import in.shingole.maker.fragment.NavigationDrawerFragment;
 import in.shingole.maker.fragment.SheetDesignerFragment;
@@ -29,6 +30,7 @@ import in.shingole.maker.data.query.WorksheetQueryModule;
         DashboardActivity.class,
         SheetDesignerActivity.class,
         ViewWorksheetActivity.class,
+        CreateCountingWorksheetFragment.class
     }
 )
 public class SheetMakerActivityScopeModule {

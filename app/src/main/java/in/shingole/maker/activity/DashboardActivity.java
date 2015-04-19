@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 
 import in.shingole.R;
 import in.shingole.maker.common.Constants;
@@ -40,10 +42,20 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
     int id = item.getItemId();
 
     if (id == R.id.action_add) {
-      Intent intent = new Intent();
-      intent.setClass(this, SheetDesignerActivity.class);
-      startActivityForResult(intent, DESIGN_SHEET_REQUEST_CODE);
-      return true;
+      View buttonView = findViewById(R.id.action_add);
+      PopupMenu templatePickerMenu = new PopupMenu(this, buttonView);
+      templatePickerMenu.getMenuInflater().inflate(R.menu.menu_worksheet_template,
+          templatePickerMenu.getMenu());
+      templatePickerMenu.show();
+      templatePickerMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+          Intent intent = new Intent();
+          intent.setClass(DashboardActivity.this, SheetDesignerActivity.class);
+          startActivityForResult(intent, DESIGN_SHEET_REQUEST_CODE);
+          return true;
+        }
+      });
     }
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {

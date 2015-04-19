@@ -11,6 +11,7 @@ import java.util.List;
  * A class for representing a problem.
  */
 public class Question extends BaseModel implements Parcelable {
+
   private String category;
   private ProblemType type;
   private String shortDescription;

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_math_addition" android:title="@string/menu_math_addition" />
+    <item android:id="@+id/menu_math_counting" android:title="@string/menu_math_counting" />
+    <item android:id="@+id/menu_english_sight" android:title="@string/menu_english_sight_words" />
+    <item android:id="@+id/menu_english_sentence" android:title="@string/menu_english_sentence_completion" />
+</menu>

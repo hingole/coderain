@@ -9,6 +9,10 @@
                 tools:context="in.shingole.maker.activity.SheetDesignerActivity$PlaceholderFragment">
 
     <GridView
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
         android:id="@+id/worksheetTemplatePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,10 +1,9 @@
 package in.shingole.maker.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,10 +13,9 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import in.shingole.R;
-
+import in.shingole.maker.data.model.WorksheetTemplate;
 /**
  * Fragment to render sheet designer
  */
@@ -34,12 +32,26 @@ public class SheetDesignerFragment extends BaseFragment {
 
   @InjectView(R.id.worksheetTemplatePicker) GridView worksheetTemplatePicker;
 
+  static class TemplateMenuAdapter extends ArrayAdapter<WorksheetTemplate> {
+
+    public TemplateMenuAdapter(Context context, List<WorksheetTemplate> menuItems) {
+      super(context, R.layout.worksheet_grid_view_item, R.id.label_worksheet_name, menuItems);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      View view = super.getView(position, convertView, parent);
+      // TODO: Set the appropriate icon
+      return view;
+    }
+  }
+
   private OnFragmentInteractionListener mListener;
-  private static final List<String> templates = ImmutableList.of(
-          "Math Addition",
-          "Math Counting",
-          "English Sight Words",
-          "Sentence Completion");
+  private static final List<WorksheetTemplate> templates = ImmutableList.of(
+      new WorksheetTemplate("Math Addition", "Addition problems", null),
+      new WorksheetTemplate("Math Counting", "Counting problems", null),
+      new WorksheetTemplate("English Sight words", "Sight words", null),
+      new WorksheetTemplate("Sentence completion", "Simple sentence completion", null));
 
   public SheetDesignerFragment() {
     super(R.layout.fragment_sheet_designer);
@@ -52,8 +64,15 @@ public class SheetDesignerFragment extends BaseFragment {
       mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
-    ArrayAdapter<String> worksheetTemplates =
-            new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, templates);
+  }
+
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    TemplateMenuAdapter menuAdapter = new TemplateMenuAdapter(getActivity(), templates);
+
+    worksheetTemplatePicker.setAdapter(menuAdapter);
+    worksheetTemplatePicker.setNumColumns(3);
   }
 
   // TODO: Rename method, update argument and hook method into UI event
