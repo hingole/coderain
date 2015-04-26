@@ -3,10 +3,15 @@ package in.shingole.maker.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import in.shingole.R;
+import in.shingole.maker.adapters.PreviewWorksheetAdapter;
 import in.shingole.maker.data.model.Worksheet;
 import in.shingole.maker.fragment.dummy.DummyContent;
 
@@ -25,6 +30,7 @@ public class CountWorksheetPreviewFragment extends ListFragment {
   private Worksheet worksheet;
 
   private OnFragmentInteractionListener mListener;
+  private PreviewWorksheetAdapter listAdapter;
 
   /**
    * Mandatory empty constructor for the fragment manager to instantiate the
@@ -36,13 +42,43 @@ public class CountWorksheetPreviewFragment extends ListFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    worksheet = savedInstanceState.getParcelable(ARG_WORKSHEET);
-
-    // TODO: Change Adapter to display your content
-    setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-        android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS));
+    setHasOptionsMenu(true);
+    if (savedInstanceState != null) {
+      if (savedInstanceState.containsKey(ARG_WORKSHEET)) {
+        worksheet = savedInstanceState.getParcelable(ARG_WORKSHEET);
+      }
+    }
   }
 
+  @Override
+  public void setArguments(Bundle args) {
+    super.setArguments(args);
+    if (args.containsKey(ARG_WORKSHEET)) {
+      worksheet = args.getParcelable(ARG_WORKSHEET);
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(ARG_WORKSHEET, worksheet);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.action_add) {
+      // Create the worksheet.
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    listAdapter =  new PreviewWorksheetAdapter(getActivity(), worksheet);
+    setListAdapter(listAdapter);
+    return view;
+  }
 
   @Override
   public void onAttach(Activity activity) {

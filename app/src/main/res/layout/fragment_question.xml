@@ -2,22 +2,54 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             android:orientation="vertical"
+             tools:ignore="MissingPrefix"
+             android:dividerPadding="20dp"
              tools:context="in.shingole.maker.fragment.QuestionFragment">
+
+    <TextView
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Count the number of bugs"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:id="@+id/question_short_description"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="@dimen/abc_text_size_display_1_material"
-        android:id="@+id/question_short_description"/>
+        android:lineSpacingMultiplier="1.3"
+        android:padding="10dp"
+        android:textSize="48dp"
+        android:text="* * * * * *"
+        android:id="@+id/question_long_description"/>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/question_detail_container"
-        android:layout_gravity="center_horizontal|top">
-
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+      <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="48dp"
+            android:text="3"
+            android:layout_weight="1"
+            android:id="@+id/multi_choice_one"/>
+      <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="48dp"
+            android:layout_weight="1"
+            android:text="13"
+            android:id="@+id/multi_choice_two"/>
+      <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="48dp"
+            android:layout_weight="1"
+            android:text="7"
+            android:id="@+id/multi_choice_three"/>
 
     </LinearLayout>
-
 </LinearLayout>

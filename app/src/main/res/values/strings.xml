@@ -25,6 +25,23 @@
     <string name="menu_math_counting">Math Counting</string>
     <string name="menu_english_sight_words">English sight words</string>
     <string name="menu_english_sentence_completion">Sentence Completion</string>
+    <string-array name="icon_labels_array"></string-array>
+    <string name="maker_icon_smart_phone_label">phones</string>
+    <string name="maker_icon_book_label">books</string>
+    <string name="maker_icon_cart_label">carts</string>
+    <string name="maker_icon_lifebuoy_label">life boats</string>
+    <string name="maker_icon_binoculars_label">binoculars</string>
+    <string name="maker_icon_bug_label">bugs</string>
+    <string name="maker_icon_trophy_label">trophies</string>
+    <string name="maker_icon_gift_label">gifts</string>
+    <string name="maker_icon_mug_label">mugs</string>
+    <string name="maker_icon_leaf_label">leaves</string>
+    <string name="maker_icon_airplane_label">airplanes</string>
+    <string name="maker_icon_truck_label">trucks</string>
+    <string name="maker_icon_man_label">men</string>
+    <string name="maker_icon_woman_label">women</string>
+    <string name="maker_icon_scissors_label">scissors</string>
+
     <string name="maker_icon_smart_phone"></string>
     <string name="maker_icon_book"></string>
     <string name="maker_icon_cart"></string>
@@ -42,5 +59,7 @@
     <string name="maker_icon_scissors"></string>
     <string name="worksheet_name">Worksheet Name</string>
     <string name="my_worksheet">My Worksheet</string>
+    <string name="menu_create">Create</string>
+    <string name="menu_next">Next</string>
 
 </resources>

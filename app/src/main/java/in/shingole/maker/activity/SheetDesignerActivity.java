@@ -20,11 +20,19 @@ public class SheetDesignerActivity extends BaseActivity
     CreateCountingWorksheetFragment.OnFragmentInteractionListener,
     CountWorksheetPreviewFragment.OnFragmentInteractionListener {
 
+  enum WorkflowStep {
+    STEP_1,
+    STEP_2,
+  }
+
+  private WorkflowStep currentStep;
+
   BaseFragment sheetDesignerFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    currentStep = WorkflowStep.STEP_1;
     sheetDesignerFragment = addFragment(
         CreateCountingWorksheetFragment.FRAGMENT_TAG,
         CreateCountingWorksheetFragment.class,
@@ -35,6 +43,12 @@ public class SheetDesignerActivity extends BaseActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_sheet_designer, menu);
+    MenuItem addButton = menu.findItem(R.id.action_add);
+    if (currentStep == WorkflowStep.STEP_1) {
+      addButton.setTitle(super.getString(R.string.menu_next));
+    } else {
+      addButton.setTitle(super.getString(R.string.menu_create));
+    }
     return true;
   }
 
@@ -47,6 +61,7 @@ public class SheetDesignerActivity extends BaseActivity
     if (id == android.R.id.home) {
       FragmentManager fm = getSupportFragmentManager();
       if (fm.getBackStackEntryCount() > 0) {
+        currentStep = WorkflowStep.STEP_1;
         fm.popBackStack();
         return true;
       }
@@ -55,7 +70,6 @@ public class SheetDesignerActivity extends BaseActivity
     if (id == R.id.action_settings) {
       return true;
     }
-
     return super.onOptionsItemSelected(item);
   }
 
@@ -74,6 +88,7 @@ public class SheetDesignerActivity extends BaseActivity
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.addToBackStack(null);
     transaction.commit();
+    currentStep = WorkflowStep.STEP_2;
   }
 
   @Override

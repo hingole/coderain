@@ -1,17 +1,32 @@
 package in.shingole.maker.fragment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.InjectView;
 import in.shingole.R;
+import in.shingole.maker.common.CustomTypefaceSpan;
 import in.shingole.maker.data.model.Worksheet;
 import in.shingole.maker.data.util.WorksheetUtil;
 
@@ -25,8 +40,11 @@ public class CreateCountingWorksheetFragment extends BaseFragment
   public static final String FRAGMENT_TAG = "CREATE_COUNTING_WORKSHEET_FRAGMENT";
   private static final String COUNT_UPTO_KEY = FRAGMENT_TAG + ".countUpto";
 
+  @Inject
+  WorksheetUtil worksheetUtil;
+
   private int countUpto = 5;
-  //@InjectView(R.id.pick_character_grid_container) GridLayout characterPickerGridView;
+  @InjectView(R.id.pick_character_grid_container) GridLayout characterPickerGridView;
   @InjectView(R.id.counting_worksheet_levels) RadioGroup worksheetLevels;
   @InjectView(R.id.counting_worksheet_level1) RadioButton level1;
   @InjectView(R.id.counting_worksheet_level2) RadioButton level2;
@@ -40,6 +58,7 @@ public class CreateCountingWorksheetFragment extends BaseFragment
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setHasOptionsMenu(true);
   }
 
   @Override
@@ -60,7 +79,7 @@ public class CreateCountingWorksheetFragment extends BaseFragment
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     if (savedInstanceState != null && savedInstanceState.containsKey(COUNT_UPTO_KEY)) {
-      countUpto = Integer.valueOf(COUNT_UPTO_KEY);
+      countUpto = savedInstanceState.getInt(COUNT_UPTO_KEY);
     }
   }
 
@@ -68,6 +87,26 @@ public class CreateCountingWorksheetFragment extends BaseFragment
     level1.setChecked(countUpto == 5);
     level2.setChecked(countUpto == 10);
     level3.setChecked(countUpto == 15);
+  }
+
+  Map<String, String> getIconMap() {
+     return ImmutableMap.<String, String>builder()
+         .put(getString(R.string.maker_icon_smart_phone), getString(R.string.maker_icon_smart_phone_label))
+         .put(getString(R.string.maker_icon_book), getString(R.string.maker_icon_book_label))
+         .put(getString(R.string.maker_icon_cart), getString(R.string.maker_icon_cart_label))
+         .put(getString(R.string.maker_icon_lifebuoy), getString(R.string.maker_icon_lifebuoy_label))
+         .put(getString(R.string.maker_icon_binoculars), getString(R.string.maker_icon_binoculars_label))
+         .put(getString(R.string.maker_icon_bug), getString(R.string.maker_icon_bug_label))
+         .put(getString(R.string.maker_icon_trophy), getString(R.string.maker_icon_trophy_label))
+         .put(getString(R.string.maker_icon_gift), getString(R.string.maker_icon_gift_label))
+         .put(getString(R.string.maker_icon_mug), getString(R.string.maker_icon_mug_label))
+         .put(getString(R.string.maker_icon_leaf), getString(R.string.maker_icon_leaf_label))
+         .put(getString(R.string.maker_icon_airplane), getString(R.string.maker_icon_airplane_label))
+         .put(getString(R.string.maker_icon_truck), getString(R.string.maker_icon_truck_label))
+         .put(getString(R.string.maker_icon_man), getString(R.string.maker_icon_man_label))
+         .put(getString(R.string.maker_icon_woman), getString(R.string.maker_icon_woman_label))
+         .put(getString(R.string.maker_icon_scissors), getString(R.string.maker_icon_scissors_label))
+         .build();
   }
 
   @Override
@@ -91,31 +130,22 @@ public class CreateCountingWorksheetFragment extends BaseFragment
       }
     });
     createCountingWorksheetButton.setOnClickListener(this);
-//    final List<String> characters = ImmutableList.<String>builder()
-//      .add(getString(R.string.maker_icon_smart_phone))
-//      .add(getString(R.string.maker_icon_book))
-//      .add(getString(R.string.maker_icon_cart))
-//      .add(getString(R.string.maker_icon_lifebuoy))
-//      .add(getString(R.string.maker_icon_binoculars))
-//      .add(getString(R.string.maker_icon_bug))
-//      .add(getString(R.string.maker_icon_trophy))
-//      .add(getString(R.string.maker_icon_gift))
-//      .add(getString(R.string.maker_icon_mug))
-//      .add(getString(R.string.maker_icon_leaf))
-//      .add(getString(R.string.maker_icon_airplane))
-//      .add(getString(R.string.maker_icon_truck))
-//      .add(getString(R.string.maker_icon_man))
-//      .add(getString(R.string.maker_icon_woman))
-//      .add(getString(R.string.maker_icon_scissors))
-//      .build();
+//    String icons = "";
+//    for (String icon : getIconMap().keySet()) {
+//      icons += icon + " " ;
+//    }
+//    SpannableStringBuilder longDesc = new SpannableStringBuilder(icons);
+//    CustomTypefaceSpan iconTypefaceSpan = new CustomTypefaceSpan(getActivity(), "maker.ttf");
 //
-//    for (String icon : characters) {
+//    longDesc.setSpan(iconTypefaceSpan, 0, longDesc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//    //for (String icon : getIconMap().keySet()) {
 //      TextView character = (TextView) LayoutInflater.from(
 //          getActivity()).inflate(R.layout.character_grid_view_item,
 //          characterPickerGridView, false);
-//      character.setText(icon);
+//      character.setText(lon);
 //      characterPickerGridView.addView(character);
-//    }
+//    //}
 //    //final Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/maker.ttf");
 //    ArrayAdapter charactersArrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, characters) {
 //      @Override
@@ -155,12 +185,21 @@ public class CreateCountingWorksheetFragment extends BaseFragment
   public void onClick(View v) {
    switch(v.getId()) {
      case R.id.create_counting_worksheet_button:
-       WorksheetUtil util = new WorksheetUtil();
-       Worksheet sheet = util.createDraftMathCountingWorksheet(countUpto, 10);
+       Worksheet sheet = worksheetUtil.createDraftMathCountingWorksheet(countUpto, 10, getIconMap());
        mListener.handleDraftWorksheetCreated(sheet);
        break;
      default:
    }
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.action_add) {
+      Worksheet sheet = worksheetUtil.createDraftMathCountingWorksheet(countUpto, 10, getIconMap());
+      mListener.handleDraftWorksheetCreated(sheet);
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   /**

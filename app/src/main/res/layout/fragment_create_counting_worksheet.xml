@@ -52,7 +52,6 @@
                 android:id="@+id/counting_worksheet_level3"
                 android:layout_gravity="left|top"/>
         </RadioGroup>
-    <!--
         <TextView
             android:paddingTop="20dp"
             android:text="Pick your characters or objects."
@@ -70,7 +69,6 @@
             android:verticalSpacing="2dp"
             android:horizontalSpacing="2dp">
         </GridLayout>
-      -->
         <LinearLayout
             android:layout_gravity="right"
             android:layout_width="wrap_content"

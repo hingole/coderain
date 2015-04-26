@@ -19,7 +19,6 @@ public class QuestionFragment extends BaseFragment {
   private static final String ARG_QUESTION = "question";
   private Question question;
   @InjectView(R.id.question_short_description) TextView questionLabel;
-  @InjectView(R.id.question_detail_container) LinearLayout questionDetailContainer;
 
   private OnFragmentInteractionListener mListener;
 
