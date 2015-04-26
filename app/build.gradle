@@ -42,4 +42,5 @@ dependencies {
     compile 'com.google.collections:google-collections:1.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'uk.co.chrisjenx:calligraphy:2.0.2'
+    compile 'com.android.support:support-annotations:21.0.3'
 }

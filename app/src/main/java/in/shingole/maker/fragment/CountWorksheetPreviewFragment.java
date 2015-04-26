@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import in.shingole.maker.data.model.Worksheet;
 import in.shingole.maker.fragment.dummy.DummyContent;
 
 /**
@@ -19,6 +20,10 @@ import in.shingole.maker.fragment.dummy.DummyContent;
 public class CountWorksheetPreviewFragment extends ListFragment {
 
   public static final String FRAGMENT_TAG = "PREVIEW_COUNTING_WORKSHEET_FRAGMENT";
+  public static final String ARG_WORKSHEET = "ARG_WORKSHEET";
+
+  private Worksheet worksheet;
+
   private OnFragmentInteractionListener mListener;
 
   /**
@@ -31,7 +36,7 @@ public class CountWorksheetPreviewFragment extends ListFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    worksheet = savedInstanceState.getParcelable(ARG_WORKSHEET);
 
     // TODO: Change Adapter to display your content
     setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
