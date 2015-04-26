@@ -66,6 +66,9 @@ public class SheetDesignerActivity extends BaseActivity
         CountWorksheetPreviewFragment.FRAGMENT_TAG,
         CountWorksheetPreviewFragment.class,
         null);
+    Bundle bundle = new Bundle();
+    bundle.putParcelable(CountWorksheetPreviewFragment.ARG_WORKSHEET, sheet);
+    fragment.setArguments(bundle);
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     transaction.replace(getContentFrameId(), fragment, CountWorksheetPreviewFragment.FRAGMENT_TAG);
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

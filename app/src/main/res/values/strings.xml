@@ -40,5 +40,7 @@
     <string name="maker_icon_man"></string>
     <string name="maker_icon_woman"></string>
     <string name="maker_icon_scissors"></string>
+    <string name="worksheet_name">Worksheet Name</string>
+    <string name="my_worksheet">My Worksheet</string>
 
 </resources>
