@@ -1,13 +1,19 @@
 package in.shingole.maker.data.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.v7.appcompat.BuildConfig;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.common.collect.Lists;
 
@@ -23,20 +29,20 @@ public class WorksheetContentProvider extends ContentProvider {
   // Keep in sync with getType method .
   enum WorksheetURIMatchingCodes {
     NO_MATCH,
-    WORKSHEETS_CODE,
-    WORKSHEET_ID
+    WORKSHEETS,
+    WORKSHEET
   }
 
-
+  private final ThreadLocal<Boolean> mIsInBatchMode = new ThreadLocal<Boolean>();
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
   static {
     uriMatcher.addURI(WorksheetContentProviderContract.AUTHORITY,
         WorksheetContentProviderContract.WORKSHEETS_CONTENT,
-        WorksheetURIMatchingCodes.WORKSHEETS_CODE.ordinal());
+        WorksheetURIMatchingCodes.WORKSHEETS.ordinal());
     uriMatcher.addURI(WorksheetContentProviderContract.AUTHORITY,
-        WorksheetContentProviderContract.CONTENT_URI + "/#",
-        WorksheetURIMatchingCodes.WORKSHEET_ID.ordinal());
+        WorksheetContentProviderContract.WORKSHEETS_CONTENT + "/#",
+        WorksheetURIMatchingCodes.WORKSHEET.ordinal());
   }
 
   @Override
@@ -59,8 +65,22 @@ public class WorksheetContentProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    // TODO: Implement this to handle requests to insert a new row.
-    throw new UnsupportedOperationException("Not yet implemented");
+    Uri resourceUri = null;
+    switch (uriMatcher.match(uri)) {
+      case 1:
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long result = db.insertOrThrow(Tables.WorksheetTable.TABLE_NAME, null, values);
+        if (result > 0) {
+          resourceUri = ContentUris.withAppendedId(uri, result);
+        }
+      default:
+    }
+    if (!isInBatchMode() && resourceUri != null) {
+      getContext().getContentResolver().notifyChange(
+          resourceUri,
+          null);
+    }
+    return resourceUri;
   }
 
   @Override
@@ -82,6 +102,7 @@ public class WorksheetContentProvider extends ContentProvider {
           sortOrder = Tables.WorksheetTable.COL_DATE_CREATED
               + " DESC";
         }
+        logQuery(qb, projection, selection, sortOrder);
         cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         break;
       case 2:
@@ -91,6 +112,7 @@ public class WorksheetContentProvider extends ContentProvider {
         selectionArgList.add(uri.getLastPathSegment());
         qb.setTables(Tables.WorksheetTable.TABLE_NAME);
         qb.appendWhere(Tables.WorksheetTable._ID + " = ? ");
+        logQuery(qb, projection, selection, sortOrder);
         cursor = qb.query(db,
             projection,
             selection,
@@ -110,5 +132,39 @@ public class WorksheetContentProvider extends ContentProvider {
                     String[] selectionArgs) {
     // TODO: Implement this to handle requests to update one or more rows.
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  @Override
+  public ContentProviderResult[] applyBatch(
+      ArrayList<ContentProviderOperation> operations)
+      throws OperationApplicationException {
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    mIsInBatchMode.set(true);
+    // the next line works because SQLiteDatabase
+    // uses a thread local SQLiteSession object for
+    // all manipulations
+    db.beginTransaction();
+    try {
+      final ContentProviderResult[] retResult = super.applyBatch(operations);
+      db.setTransactionSuccessful();
+      getContext().getContentResolver().notifyChange(WorksheetContentProviderContract.CONTENT_URI,
+          null);
+      return retResult;
+    }
+    finally {
+      mIsInBatchMode.remove();
+      db.endTransaction();
+    }
+  }
+
+  private boolean isInBatchMode() {
+    return mIsInBatchMode.get() != null && mIsInBatchMode.get();
+  }
+
+
+  private void logQuery(SQLiteQueryBuilder builder, String[] projection, String selection, String sortOrder) {
+    if (BuildConfig.DEBUG) {
+      Log.v("maker", "query: " + builder.buildQuery(projection, selection, null, null, sortOrder, null));
+    }
   }
 }

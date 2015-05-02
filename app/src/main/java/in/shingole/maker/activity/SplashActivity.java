@@ -2,46 +2,26 @@ package in.shingole.maker.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import in.shingole.R;
+import com.squareup.otto.Subscribe;
+
+import in.shingole.maker.events.Events;
 import in.shingole.maker.fragment.SplashFragment;
 
-
-public class SplashActivity extends BaseActivity implements SplashFragment.SplashEventsListener {
+/**
+ * The initial screen that shows up when the application launches.
+ */
+public class SplashActivity extends BaseActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     actionBar.hide();
-    super.addFragment(SplashFragment.FRAGMENT_TAG, SplashFragment.class, savedInstanceState);
+    addFragment(SplashFragment.FRAGMENT_TAG, SplashFragment.class, savedInstanceState);
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_welcome, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onCreateNewWorksheetTapped() {
+  @Subscribe
+  public void handleCreateNewWorksheetTappedEvent(Events.LoginToWorksheetTappedEvent event) {
     Intent intent = new Intent();
     intent.setClass(this, DashboardActivity.class);
     startActivity(intent);

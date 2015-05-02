@@ -61,5 +61,6 @@
     <string name="my_worksheet">My Worksheet</string>
     <string name="menu_create">Create</string>
     <string name="menu_next">Next</string>
+    <string name="worksheet_description">Worksheet Description</string>
 
 </resources>

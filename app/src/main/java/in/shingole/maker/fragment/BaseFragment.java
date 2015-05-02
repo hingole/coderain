@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Bus;
+
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import in.shingole.maker.activity.BaseActivity;
 
@@ -15,6 +19,10 @@ import in.shingole.maker.activity.BaseActivity;
  * Base fragment which performs injection using the activity-scoped object graph
  */
 public abstract class BaseFragment extends Fragment {
+
+  @Inject
+  Bus bus;
+
   int fragmentViewId;
 
   public enum ViewState {
@@ -23,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
     HIDDEN,
   }
 
-  BaseFragment(int fragmentViewId) {
+  public BaseFragment(int fragmentViewId) {
     this.fragmentViewId = fragmentViewId;
   }
 
@@ -49,7 +57,20 @@ public abstract class BaseFragment extends Fragment {
   }
 
   public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
     ButterKnife.inject(this, view);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    bus.unregister(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    bus.register(this);
   }
 
   public void setViewState(ViewState viewState) {

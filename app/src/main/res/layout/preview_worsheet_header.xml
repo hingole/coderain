@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/worksheet_name"/>
+        android:hint="Enter the name of your worksheet"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:id="@+id/worksheetName"
-        android:text="@string/my_worksheet"/>
+        android:hint="@string/my_worksheet"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Worksheet Description"/>
+        android:hint="@string/worksheet_description"/>
 
     <EditText
         android:layout_width="match_parent"

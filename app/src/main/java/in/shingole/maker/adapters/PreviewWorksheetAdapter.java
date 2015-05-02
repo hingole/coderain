@@ -41,6 +41,9 @@ public class PreviewWorksheetAdapter extends BaseAdapter {
   private final CustomTypefaceSpan iconTypefaceSpan;
   private final Context context;
 
+  private EditText worksheetNameEditText;
+  private EditText worksheetDescriptionEditText;
+
   public PreviewWorksheetAdapter(Context context, Worksheet sheet) {
     super();
     this.context = context;
@@ -90,18 +93,27 @@ public class PreviewWorksheetAdapter extends BaseAdapter {
     return 0;
   }
 
+  public void updateWorksheet() {
+    sheet.setName(worksheetNameEditText.getText().toString());
+    sheet.setDescription(worksheetDescriptionEditText.getText().toString());
+  }
+
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     if (ViewType.WORKSHEET_HEADER_VIEW.ordinal() == getItemViewType(position)) {
-      LinearLayout headerView =
-          (LinearLayout)inflator.inflate(R.layout.preview_worsheet_header, parent, false);
+      LinearLayout headerView;
+      if (convertView == null) {
+        headerView = (LinearLayout) inflator.inflate(
+            R.layout.preview_worsheet_header, parent, false);
+        worksheetNameEditText = (EditText)headerView.findViewById(R.id.worksheetName);
+        worksheetDescriptionEditText = (EditText)headerView.findViewById(R.id.worksheetDescription);
+      } else {
+        headerView = (LinearLayout) convertView;
+      }
       if (sheet.getName() != null) {
-        EditText worksheetNameEditText = (EditText)headerView.findViewById(R.id.worksheetName);
         worksheetNameEditText.setText(sheet.getName());
       }
       if (sheet.getDescription() != null) {
-        EditText worksheetDescriptionEditText =
-            (EditText)headerView.findViewById(R.id.worksheetDescription);
         worksheetDescriptionEditText.setText(sheet.getDescription());
       }
       return headerView;
@@ -145,5 +157,8 @@ public class PreviewWorksheetAdapter extends BaseAdapter {
     return convertView;
   }
 
-
+  public Worksheet getSheet() {
+    updateWorksheet();
+    return sheet;
+  }
 }

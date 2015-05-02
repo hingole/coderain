@@ -1,39 +1,42 @@
 package in.shingole.maker.activity;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+
+import javax.inject.Inject;
 
 import in.shingole.R;
 import in.shingole.maker.common.Utils;
-import in.shingole.maker.data.model.Worksheet;
-import in.shingole.maker.fragment.BaseFragment;
+import in.shingole.maker.events.Events;
 import in.shingole.maker.fragment.CountWorksheetPreviewFragment;
 import in.shingole.maker.fragment.CreateCountingWorksheetFragment;
-import in.shingole.maker.fragment.SheetDesignerFragment;
 
-public class SheetDesignerActivity extends BaseActivity
-    implements SheetDesignerFragment.OnFragmentInteractionListener,
-    CreateCountingWorksheetFragment.OnFragmentInteractionListener,
-    CountWorksheetPreviewFragment.OnFragmentInteractionListener {
+public class SheetDesignerActivity extends BaseActivity {
 
   enum WorkflowStep {
     STEP_1,
     STEP_2,
   }
 
-  private WorkflowStep currentStep;
+  int currentDBOperationToken = 0;
 
-  BaseFragment sheetDesignerFragment;
+  @Inject
+  AsyncWorksheetQueryHandler asyncQueryHandler;
+
+  private WorkflowStep currentStep;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     currentStep = WorkflowStep.STEP_1;
-    sheetDesignerFragment = addFragment(
+    addFragment(
         CreateCountingWorksheetFragment.FRAGMENT_TAG,
         CreateCountingWorksheetFragment.class,
         savedInstanceState);
@@ -73,36 +76,39 @@ public class SheetDesignerActivity extends BaseActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public void handleDraftWorksheetCreated(Worksheet sheet) {
-    CountWorksheetPreviewFragment fragment = Utils.getFragment(
-        this,
-        CountWorksheetPreviewFragment.FRAGMENT_TAG,
-        CountWorksheetPreviewFragment.class,
-        null);
-    Bundle bundle = new Bundle();
-    bundle.putParcelable(CountWorksheetPreviewFragment.ARG_WORKSHEET, sheet);
-    fragment.setArguments(bundle);
-    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-    transaction.replace(getContentFrameId(), fragment, CountWorksheetPreviewFragment.FRAGMENT_TAG);
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.addToBackStack(null);
-    transaction.commit();
-    currentStep = WorkflowStep.STEP_2;
+
+
+  @Subscribe
+  public void handleInsertOperationCompleted(Events.InsertOperationCompleteEvent event) {
+    if (event.getToken() == currentDBOperationToken) {
+      Toast.makeText(this, "Successful created new worksheet", Toast.LENGTH_SHORT);
+      Intent data = new Intent();
+      data.setData(event.getResourceUri());
+      setResult(RESULT_OK, data);
+      finish();
+    }
   }
 
-  @Override
-  public void finish() {
-    super.finish();
+  @Subscribe
+  public void handleDraftWorksheetCreated(Events.CreateWorksheetTappedEvent event) {
+    if (currentStep == WorkflowStep.STEP_2) {
+      currentDBOperationToken = asyncQueryHandler.insertWorksheet(event.getDraftWorksheet());
+    } else {
+      CountWorksheetPreviewFragment fragment = Utils.getFragment(
+          this,
+          CountWorksheetPreviewFragment.FRAGMENT_TAG,
+          CountWorksheetPreviewFragment.class,
+          null);
+      Bundle bundle = new Bundle();
+      bundle.putParcelable(CountWorksheetPreviewFragment.ARG_WORKSHEET, event.getDraftWorksheet());
+      fragment.setArguments(bundle);
+      FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+      transaction.replace(getContentFrameId(), fragment, CountWorksheetPreviewFragment.FRAGMENT_TAG);
+      transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+      transaction.addToBackStack(null);
+      transaction.commit();
+      currentStep = WorkflowStep.STEP_2;
+    }
   }
 
-  @Override
-  public void onFragmentInteraction(Uri uri) {
-    // Nothing as of now.
-  }
-
-  @Override
-  public void onFragmentInteraction(String id) {
-
-  }
 }

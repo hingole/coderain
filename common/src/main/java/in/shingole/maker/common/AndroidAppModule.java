@@ -4,6 +4,8 @@ package in.shingole.maker.common;
 import android.content.Context;
 import android.location.LocationManager;
 
+import com.squareup.otto.Bus;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -37,8 +39,8 @@ public class AndroidAppModule {
     return (LocationManager) applicationContext.getSystemService(Context.LOCATION_SERVICE);
   }
 
-  /*@Provides @Singleton
+  @Provides @Singleton
   Bus provideBus() {
-      return new Bus();
-  }*/
+    return new Bus();
+  }
 }

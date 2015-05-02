@@ -7,29 +7,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import com.squareup.otto.Subscribe;
+
 import in.shingole.R;
 import in.shingole.maker.common.Constants;
+import in.shingole.maker.events.Events;
 import in.shingole.maker.fragment.DashboardFragment;
 import in.shingole.maker.widget.LeftNavigationWidget;
 
-public class DashboardActivity extends AbstractNavigationDrawerActivity
-    implements DashboardFragment.OnFragmentInteractionListener {
-  private DashboardFragment dashboardFragment;
+public class DashboardActivity extends AbstractNavigationDrawerActivity {
   private static final int DESIGN_SHEET_REQUEST_CODE = 909;
   private static final int VIEW_WORKSHEET_REQUEST_CODE = 809;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    dashboardFragment = addFragment(
-        DashboardFragment.FRAGMENT_TAG,
-        DashboardFragment.class,
-        savedInstanceState);
+    addFragment(DashboardFragment.FRAGMENT_TAG, DashboardFragment.class, savedInstanceState);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_dashboard, menu);
     return true;
   }
@@ -66,15 +63,23 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity
   }
 
   @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (DESIGN_SHEET_REQUEST_CODE == requestCode) {
+      bus.post(new Events.DataOperationCompletedEvent());
+    }
+  }
+
+  @Override
   protected LeftNavigationWidget.NavigationType getNavigationType() {
     return LeftNavigationWidget.NavigationType.SHEETS;
   }
 
-  @Override
-  public void openWorksheet(String worksheetId) {
+  @Subscribe
+  public void openWorksheet(Events.WorksheetIconTappedEvent event) {
     Intent intent = new Intent();
     intent.setClass(this, ViewWorksheetActivity.class);
-    intent.putExtra(Constants.PARAM_WORKSHEET_ID, worksheetId);
+    intent.putExtra(Constants.PARAM_WORKSHEET_ID, event.getWorksheetId());
     startActivityForResult(intent, VIEW_WORKSHEET_REQUEST_CODE);
   }
 

@@ -8,6 +8,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
+import com.squareup.otto.Bus;
+
+import javax.inject.Inject;
+
 import dagger.ObjectGraph;
 import in.shingole.R;
 import in.shingole.maker.common.Utils;
@@ -16,15 +20,16 @@ import in.shingole.maker.common.DaggerApplication;
 import in.shingole.maker.common.Injector;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public abstract class BaseActivity
-    extends ActionBarActivity
-    implements Injector {
+public abstract class BaseActivity extends ActionBarActivity implements Injector {
 
   private final int baseLayoutId;
   protected ActionBar actionBar;
   private ObjectGraph mActivityGraph;
 
-  public BaseActivity(int baseLayoutId) {
+  @Inject
+  protected Bus bus;
+
+  public BaseActivity(int baseLayoutId){
     this.baseLayoutId = baseLayoutId;
   }
 
@@ -52,6 +57,9 @@ public abstract class BaseActivity
     super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
   }
 
+  /**
+   * Returns the id of the main container view. This is where fragments will be added.
+   */
   protected int getContentFrameId() {
     return R.id.content_frame;
   }
@@ -85,11 +93,22 @@ public abstract class BaseActivity
   }
 
   @Override
+  public void onPause() {
+    super.onPause();
+    bus.unregister(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    bus.register(this);
+  }
+
+  @Override
   protected void onDestroy() {
     // Eagerly clear the reference to the activity graph to allow it to be garbage collected as
     // soon as possible.
     mActivityGraph = null;
-
     super.onDestroy();
   }
 

@@ -3,6 +3,8 @@ package in.shingole.maker.app;
 import android.content.pm.ApplicationInfo;
 import android.os.StrictMode;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class SheetMakerApplication extends DaggerApplication {
 
   @Override
   public void onCreate() {
+    super.onCreate();
+    Fabric.with(this, new Crashlytics());
     boolean isDebuggable = (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE));
     if (isDebuggable) {
       StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -33,7 +37,6 @@ public class SheetMakerApplication extends DaggerApplication {
           .penaltyDeath()
           .build());
     }
-    super.onCreate();
   }
 
   @Override

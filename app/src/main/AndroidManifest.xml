@@ -29,6 +29,7 @@
         <activity
             android:name=".maker.activity.SheetDesignerActivity"
             android:label="@string/title_activity_sheet_designer"
+            android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".maker.activity.DashboardActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -43,6 +44,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".maker.activity.DashboardActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5203ff0af48858d6c0a37656f87d1a12add9b505" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
