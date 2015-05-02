@@ -11,7 +11,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import in.shingole.maker.common.Annotations;
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
+import in.shingole.maker.data.provider.MakerContentProviderContract;
 import in.shingole.maker.data.model.Worksheet;
 
 /**
@@ -49,9 +49,9 @@ public class WorksheetDetailQuery {
 
   public Loader<Cursor> createWorksheetDetailLoader(String worksheetId) {
     Loader<Cursor> loader = new CursorLoader(context,
-        WorksheetContentProviderContract.CONTENT_URI,
+        MakerContentProviderContract.CONTENT_URI,
         Projection.PROJECTION,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID + " = ?",
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID + " = ?",
         new String[] { worksheetId },
         null);
     return loader;
@@ -59,12 +59,12 @@ public class WorksheetDetailQuery {
 
   private interface Projection {
     public static final String[] PROJECTION = {
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_DESCRIPTION,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_CATEGORY,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_LAST_UPDATED,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_DESCRIPTION,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_CATEGORY,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_LAST_UPDATED,
     };
 
     int COL_ID = 0;

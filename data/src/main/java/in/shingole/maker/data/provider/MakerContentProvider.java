@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import in.shingole.maker.data.sqlite.Tables;
 import in.shingole.maker.data.sqlite.WorksheetSQLiteHelper;
 
-public class WorksheetContentProvider extends ContentProvider {
+public class MakerContentProvider extends ContentProvider {
 
   WorksheetSQLiteHelper dbHelper;
 
@@ -37,11 +37,11 @@ public class WorksheetContentProvider extends ContentProvider {
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
   static {
-    uriMatcher.addURI(WorksheetContentProviderContract.AUTHORITY,
-        WorksheetContentProviderContract.WORKSHEETS_CONTENT,
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.WORKSHEETS_CONTENT,
         WorksheetURIMatchingCodes.WORKSHEETS.ordinal());
-    uriMatcher.addURI(WorksheetContentProviderContract.AUTHORITY,
-        WorksheetContentProviderContract.WORKSHEETS_CONTENT + "/#",
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.WORKSHEETS_CONTENT + "/#",
         WorksheetURIMatchingCodes.WORKSHEET.ordinal());
   }
 
@@ -56,9 +56,9 @@ public class WorksheetContentProvider extends ContentProvider {
     // Keep in sync with WorksheetURIMatchingCodes enum.
     switch (uriMatcher.match(uri)) {
       case 1:
-        return WorksheetContentProviderContract.WORKSHEETS_CONTENT;
+        return MakerContentProviderContract.WORKSHEETS_CONTENT;
       case 2:
-        return WorksheetContentProviderContract.WORKSHEET_ITEM_CONTENT_TYPE;
+        return MakerContentProviderContract.WORKSHEET_ITEM_CONTENT_TYPE;
     }
     return null;
   }
@@ -147,7 +147,7 @@ public class WorksheetContentProvider extends ContentProvider {
     try {
       final ContentProviderResult[] retResult = super.applyBatch(operations);
       db.setTransactionSuccessful();
-      getContext().getContentResolver().notifyChange(WorksheetContentProviderContract.CONTENT_URI,
+      getContext().getContentResolver().notifyChange(MakerContentProviderContract.CONTENT_URI,
           null);
       return retResult;
     }

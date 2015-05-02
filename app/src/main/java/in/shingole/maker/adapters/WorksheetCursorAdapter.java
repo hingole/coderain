@@ -8,7 +8,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import in.shingole.R;
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
+import in.shingole.maker.data.provider.MakerContentProviderContract;
 import in.shingole.maker.data.model.Worksheet;
 import in.shingole.maker.data.query.WorksheetListQuery;
 
@@ -23,8 +23,8 @@ public class WorksheetCursorAdapter extends SimpleCursorAdapter {
         0,
         null,
         new String[]{
-            WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-            WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME },
+            MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
+            MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME },
         null,
         0);
     inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

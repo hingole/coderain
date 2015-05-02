@@ -17,7 +17,7 @@ import butterknife.OnItemClick;
 import in.shingole.R;
 import in.shingole.maker.adapters.WorksheetCursorAdapter;
 import in.shingole.maker.common.Constants;
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
+import in.shingole.maker.data.provider.MakerContentProviderContract;
 import in.shingole.maker.data.query.WorksheetListQuery;
 import in.shingole.maker.events.Events;
 
@@ -70,7 +70,7 @@ public class DashboardFragment extends BaseFragment
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
     if (loader.getId() == Constants.WORKSHEET_LOADER_ID) {
       data.setNotificationUri(getActivity().getContentResolver(),
-          WorksheetContentProviderContract.CONTENT_URI);
+          MakerContentProviderContract.CONTENT_URI);
       worksheetCursorAdapter.swapCursor(new WorksheetListQuery.WorksheetCursorWrapper(data));
     }
   }

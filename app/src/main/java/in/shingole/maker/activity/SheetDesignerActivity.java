@@ -81,7 +81,6 @@ public class SheetDesignerActivity extends BaseActivity {
   @Subscribe
   public void handleInsertOperationCompleted(Events.InsertOperationCompleteEvent event) {
     if (event.getToken() == currentDBOperationToken) {
-      Toast.makeText(this, "Successful created new worksheet", Toast.LENGTH_SHORT);
       Intent data = new Intent();
       data.setData(event.getResourceUri());
       setResult(RESULT_OK, data);

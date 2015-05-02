@@ -1,7 +1,6 @@
 package in.shingole.maker.activity;
 
 import android.content.AsyncQueryHandler;
-import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
@@ -12,9 +11,9 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import in.shingole.maker.data.provider.WorksheetContentProviderContract.WORKSHEET_PROJECTIONS;
+import in.shingole.maker.data.provider.MakerContentProviderContract;
+import in.shingole.maker.data.provider.MakerContentProviderContract.WORKSHEET_PROJECTIONS;
 import in.shingole.maker.data.model.Worksheet;
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
 import in.shingole.maker.events.Events;
 
 /**
@@ -39,7 +38,7 @@ public class AsyncWorksheetQueryHandler extends AsyncQueryHandler {
    */
   public int insertWorksheet(Worksheet sheet) {
     int token = random.nextInt();
-    startInsert(token, null, WorksheetContentProviderContract.CONTENT_URI,
+    startInsert(token, null, MakerContentProviderContract.CONTENT_URI,
         getContentValuesForWorksheet(sheet));
     return token;
   }

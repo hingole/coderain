@@ -9,7 +9,7 @@ import in.shingole.maker.data.sqlite.Tables;
 /**
  * Contract for WorksheetContentProvider
  */
-public class WorksheetContentProviderContract {
+public class MakerContentProviderContract {
   public static final String AUTHORITY ="in.shingole.sheetmaker.provider";
   public static final String WORKSHEETS_CONTENT ="worksheets";
 

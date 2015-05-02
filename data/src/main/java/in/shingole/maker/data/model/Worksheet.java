@@ -6,8 +6,6 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
-
 /**
  * Worksheet class
  */

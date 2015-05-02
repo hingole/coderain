@@ -63,14 +63,6 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity {
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (DESIGN_SHEET_REQUEST_CODE == requestCode) {
-      bus.post(new Events.DataOperationCompletedEvent());
-    }
-  }
-
-  @Override
   protected LeftNavigationWidget.NavigationType getNavigationType() {
     return LeftNavigationWidget.NavigationType.SHEETS;
   }

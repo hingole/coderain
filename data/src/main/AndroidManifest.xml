@@ -6,7 +6,7 @@
                  android:icon="@drawable/ic_launcher"
         >
         <provider
-            android:name="in.shingole.maker.data.provider.WorksheetContentProvider"
+            android:name="in.shingole.maker.data.provider.MakerContentProvider"
             android:authorities="in.shingole.sheetmaker.provider"
             android:enabled="true"
             android:exported="false" >

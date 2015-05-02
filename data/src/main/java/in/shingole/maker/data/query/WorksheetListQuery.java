@@ -11,7 +11,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import in.shingole.maker.data.provider.WorksheetContentProviderContract;
+import in.shingole.maker.data.provider.MakerContentProviderContract;
 import in.shingole.maker.data.model.Worksheet;
 
 /**
@@ -47,16 +47,16 @@ public class WorksheetListQuery {
 
   public Loader<Cursor> createWorksheetListLoader() {
     return new CursorLoader(context,
-        WorksheetContentProviderContract.CONTENT_URI,
+        MakerContentProviderContract.CONTENT_URI,
         Projection.PROJECTION,
         null, null,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED + " DESC");
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED + " DESC");
   }
 
   private interface Projection {
     public static final String[] PROJECTION = {
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-        WorksheetContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
+        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
     };
 
     int COL_ID = 0;
