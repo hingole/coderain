@@ -49,9 +49,9 @@ public class WorksheetDetailQuery {
 
   public Loader<Cursor> createWorksheetDetailLoader(String worksheetId) {
     Loader<Cursor> loader = new CursorLoader(context,
-        MakerContentProviderContract.CONTENT_URI,
+        MakerContentProviderContract.Worksheet.CONTENT_URI,
         Projection.PROJECTION,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID + " = ?",
+        MakerContentProviderContract.Worksheet.COL_ID + " = ?",
         new String[] { worksheetId },
         null);
     return loader;
@@ -59,12 +59,12 @@ public class WorksheetDetailQuery {
 
   private interface Projection {
     public static final String[] PROJECTION = {
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_DESCRIPTION,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_CATEGORY,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_LAST_UPDATED,
+        MakerContentProviderContract.Worksheet.COL_ID,
+        MakerContentProviderContract.Worksheet.COL_WORKSHEET_NAME,
+        MakerContentProviderContract.Worksheet.COL_WORKSHEET_DESCRIPTION,
+        MakerContentProviderContract.Worksheet.COL_CATEGORY,
+        MakerContentProviderContract.Worksheet.COL_DATE_CREATED,
+        MakerContentProviderContract.Worksheet.COL_LAST_UPDATED,
     };
 
     int COL_ID = 0;

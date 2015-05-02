@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.google.experimental.worksheetdata">
+          package="in.shingole.maker.data">
 
     <application android:allowBackup="true"
                  android:label="@string/app_name"
@@ -7,7 +7,7 @@
         >
         <provider
             android:name="in.shingole.maker.data.provider.MakerContentProvider"
-            android:authorities="in.shingole.sheetmaker.provider"
+            android:authorities="in.shingole.maker.provider"
             android:enabled="true"
             android:exported="false" >
         </provider>

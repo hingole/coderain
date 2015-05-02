@@ -16,7 +16,6 @@ public class Question extends BaseModel implements Parcelable {
   private ProblemType type;
   private String shortDescription;
   private String longDescription;
-  private Date dateSolved;
   private DifficultyLevel difficultyLevel;
   private int numAttempts;
   private int maxAttempts;
@@ -60,14 +59,6 @@ public class Question extends BaseModel implements Parcelable {
 
   public void setLongDescription(String longDescription) {
     this.longDescription = longDescription;
-  }
-
-  public Date getDateSolved() {
-    return dateSolved;
-  }
-
-  public void setDateSolved(Date dateSolved) {
-    this.dateSolved = dateSolved;
   }
 
   public DifficultyLevel getDifficultyLevel() {
@@ -141,7 +132,6 @@ public class Question extends BaseModel implements Parcelable {
     shortDescription = in.readString();
     longDescription = in.readString();
     long tmpDateSolved = in.readLong();
-    dateSolved = tmpDateSolved != -1 ? new Date(tmpDateSolved) : null;
     difficultyLevel = (DifficultyLevel) in.readValue(DifficultyLevel.class.getClassLoader());
     numAttempts = in.readInt();
     maxAttempts = in.readInt();
@@ -169,7 +159,6 @@ public class Question extends BaseModel implements Parcelable {
     dest.writeValue(type);
     dest.writeString(shortDescription);
     dest.writeString(longDescription);
-    dest.writeLong(dateSolved != null ? dateSolved.getTime() : -1L);
     dest.writeValue(difficultyLevel);
     dest.writeInt(numAttempts);
     dest.writeInt(maxAttempts);

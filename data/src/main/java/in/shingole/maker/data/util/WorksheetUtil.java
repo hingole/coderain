@@ -1,11 +1,6 @@
 package in.shingole.maker.data.util;
 
 import android.content.Context;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
-
-import com.google.experimental.worksheetdata.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +11,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import in.shingole.maker.common.Annotations;
+import in.shingole.maker.data.R;
 import in.shingole.maker.data.model.AnswerType;
 import in.shingole.maker.data.model.ProblemType;
 import in.shingole.maker.data.model.Question;
@@ -85,7 +81,7 @@ public class WorksheetUtil {
       String strAnswer = worksheetSolutions.get(i).toString();
       question.setShortDescription(
           String.format(context.getString(R.string.count_the_number_of_objects),
-              i+1, icons.get(icon)));
+              i + 1, icons.get(icon)));
 
       question.setLongDescription(longDescription);
       List<String> multipleChoices = new ArrayList<>(3);

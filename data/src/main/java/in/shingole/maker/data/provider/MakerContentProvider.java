@@ -26,23 +26,32 @@ public class MakerContentProvider extends ContentProvider {
 
   WorksheetSQLiteHelper dbHelper;
 
-  // Keep in sync with getType method .
-  enum WorksheetURIMatchingCodes {
-    NO_MATCH,
-    WORKSHEETS,
-    WORKSHEET
-  }
+  private static final int WORKSHEETS = 100;
+  private static final int WORKSHEET = 101;
+  private static final int WORKSHEET_ID_QUESTIONS = 102;
+  private static final int QUESTIONS = 103;
+  private static final int QUESTION = 104;
 
   private final ThreadLocal<Boolean> mIsInBatchMode = new ThreadLocal<Boolean>();
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
   static {
     uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
-        MakerContentProviderContract.WORKSHEETS_CONTENT,
-        WorksheetURIMatchingCodes.WORKSHEETS.ordinal());
+        MakerContentProviderContract.QUESTION_CONTENT,
+        QUESTIONS);
     uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
-        MakerContentProviderContract.WORKSHEETS_CONTENT + "/#",
-        WorksheetURIMatchingCodes.WORKSHEET.ordinal());
+        MakerContentProviderContract.QUESTION_CONTENT + "/#",
+        QUESTION);
+
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.WORKSHEET_CONTENT,
+        WORKSHEETS);
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.WORKSHEET_CONTENT + "/#",
+        WORKSHEET);
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.WORKSHEET_CONTENT + "/#/questions",
+        WORKSHEET_ID_QUESTIONS);
   }
 
   @Override
@@ -55,10 +64,15 @@ public class MakerContentProvider extends ContentProvider {
   public String getType(Uri uri) {
     // Keep in sync with WorksheetURIMatchingCodes enum.
     switch (uriMatcher.match(uri)) {
-      case 1:
-        return MakerContentProviderContract.WORKSHEETS_CONTENT;
-      case 2:
-        return MakerContentProviderContract.WORKSHEET_ITEM_CONTENT_TYPE;
+      case WORKSHEETS:
+        return MakerContentProviderContract.Worksheet.CONTENT_TYPE;
+      case WORKSHEET:
+        return MakerContentProviderContract.Worksheet.CONTENT_ITEM_TYPE;
+      case WORKSHEET_ID_QUESTIONS:
+      case QUESTIONS:
+        return MakerContentProviderContract.Question.CONTENT_TYPE;
+      case QUESTION:
+        return MakerContentProviderContract.Question.CONTENT_ITEM_TYPE;
     }
     return null;
   }
@@ -67,7 +81,7 @@ public class MakerContentProvider extends ContentProvider {
   public Uri insert(Uri uri, ContentValues values) {
     Uri resourceUri = null;
     switch (uriMatcher.match(uri)) {
-      case 1:
+      case WORKSHEETS:
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long result = db.insertOrThrow(Tables.WorksheetTable.TABLE_NAME, null, values);
         if (result > 0) {
@@ -96,7 +110,7 @@ public class MakerContentProvider extends ContentProvider {
     SQLiteDatabase db = dbHelper.getWritableDatabase();
     Cursor cursor = null;
     switch (uriMatcher.match(uri)) {
-      case 1:
+      case WORKSHEETS:
         qb.setTables(Tables.WorksheetTable.TABLE_NAME);
         if (TextUtils.isEmpty(sortOrder)) {
           sortOrder = Tables.WorksheetTable.COL_DATE_CREATED
@@ -105,7 +119,7 @@ public class MakerContentProvider extends ContentProvider {
         logQuery(qb, projection, selection, sortOrder);
         cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         break;
-      case 2:
+      case WORKSHEET:
         ArrayList<String> selectionArgList = selectionArgs == null
             ? Lists.<String>newArrayList()
             : Lists.newArrayList(selectionArgs);
@@ -147,7 +161,8 @@ public class MakerContentProvider extends ContentProvider {
     try {
       final ContentProviderResult[] retResult = super.applyBatch(operations);
       db.setTransactionSuccessful();
-      getContext().getContentResolver().notifyChange(MakerContentProviderContract.CONTENT_URI,
+      getContext().getContentResolver().notifyChange(
+          MakerContentProviderContract.Worksheet.CONTENT_URI,
           null);
       return retResult;
     }

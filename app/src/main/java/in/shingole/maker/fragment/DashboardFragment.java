@@ -69,9 +69,11 @@ public class DashboardFragment extends BaseFragment
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
     if (loader.getId() == Constants.WORKSHEET_LOADER_ID) {
-      data.setNotificationUri(getActivity().getContentResolver(),
-          MakerContentProviderContract.CONTENT_URI);
-      worksheetCursorAdapter.swapCursor(new WorksheetListQuery.WorksheetCursorWrapper(data));
+      if (data != null) {
+        data.setNotificationUri(getActivity().getContentResolver(),
+            MakerContentProviderContract.Worksheet.CONTENT_URI);
+        worksheetCursorAdapter.swapCursor(new WorksheetListQuery.WorksheetCursorWrapper(data));
+      }
     }
   }
 
@@ -80,9 +82,5 @@ public class DashboardFragment extends BaseFragment
     if (loader.getId() == Constants.WORKSHEET_LOADER_ID) {
       worksheetCursorAdapter.swapCursor(null);
     }
-  }
-
-  @Subscribe public void handleEvent(Events.DataOperationCompletedEvent event) {
-    //getLoaderManager().getLoader(Constants.WORKSHEET_LOADER_ID).
   }
 }

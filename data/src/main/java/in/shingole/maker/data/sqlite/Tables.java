@@ -36,9 +36,7 @@ public class Tables {
     public static final String COL_TYPE = "type";
     public static final String COL_SHORT_DESC = "short_desc";
     public static final String COL_LONG_DESC = "long_desc";
-    public static final String COL_DATE_SOLVED = "date_solved";
     public static final String COL_DIFFICULTY_LEVEL = "difficulty_level";
-    public static final String COL_NUM_ATTEMPTS = "num_attempts";
     public static final String COL_MAX_ATTEMPTS = "max_attempts";
     public static final String COL_SHORT_ANSWER = "short_answer";
     public static final String COL_LONG_ANSWER = "long_answer";
@@ -55,9 +53,7 @@ public class Tables {
         + ", " + COL_DATE_CREATED + COL_TYPE_TEXT
         + ", " + COL_LAST_UPDATED + COL_TYPE_TEXT
         + ", " + COL_IS_MARKED_FOR_DELETION + COL_TYPE_INTEGER
-        + ", " + COL_DATE_SOLVED + COL_TYPE_TEXT
         + ", " + COL_DIFFICULTY_LEVEL + COL_TYPE_INTEGER
-        + ", " + COL_NUM_ATTEMPTS + COL_TYPE_INTEGER
         + ", " + COL_MAX_ATTEMPTS + COL_TYPE_INTEGER
         + ", " + COL_SHORT_ANSWER + COL_TYPE_TEXT
         + ", " + COL_LONG_ANSWER + COL_TYPE_TEXT

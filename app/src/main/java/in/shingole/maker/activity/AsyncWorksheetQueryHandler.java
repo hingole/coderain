@@ -11,8 +11,8 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
+import in.shingole.maker.data.provider.MakerContentProvider;
 import in.shingole.maker.data.provider.MakerContentProviderContract;
-import in.shingole.maker.data.provider.MakerContentProviderContract.WORKSHEET_PROJECTIONS;
 import in.shingole.maker.data.model.Worksheet;
 import in.shingole.maker.events.Events;
 
@@ -38,7 +38,7 @@ public class AsyncWorksheetQueryHandler extends AsyncQueryHandler {
    */
   public int insertWorksheet(Worksheet sheet) {
     int token = random.nextInt();
-    startInsert(token, null, MakerContentProviderContract.CONTENT_URI,
+    startInsert(token, null, MakerContentProviderContract.Worksheet.CONTENT_URI,
         getContentValuesForWorksheet(sheet));
     return token;
   }
@@ -60,9 +60,12 @@ public class AsyncWorksheetQueryHandler extends AsyncQueryHandler {
 
   ContentValues getContentValuesForWorksheet(Worksheet sheet) {
     ContentValues values = new ContentValues();
-    values.put(WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME, sheet.getName());
-    values.put(WORKSHEET_PROJECTIONS.COL_WORKSHEET_DESCRIPTION, sheet.getDescription());
-    values.put(WORKSHEET_PROJECTIONS.COL_DATE_CREATED, sheet.getDateCreated().toString());
+    values.put(MakerContentProviderContract.Worksheet.COL_WORKSHEET_NAME,
+        sheet.getName());
+    values.put(MakerContentProviderContract.Worksheet.COL_WORKSHEET_DESCRIPTION,
+        sheet.getDescription());
+    values.put(MakerContentProviderContract.Worksheet.COL_DATE_CREATED,
+        sheet.getDateCreated().toString());
     return values;
   }
 }

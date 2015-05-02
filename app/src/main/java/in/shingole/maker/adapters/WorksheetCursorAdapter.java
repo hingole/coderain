@@ -23,8 +23,8 @@ public class WorksheetCursorAdapter extends SimpleCursorAdapter {
         0,
         null,
         new String[]{
-            MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-            MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME },
+            MakerContentProviderContract.Worksheet.COL_ID,
+            MakerContentProviderContract.Worksheet.COL_WORKSHEET_NAME },
         null,
         0);
     inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

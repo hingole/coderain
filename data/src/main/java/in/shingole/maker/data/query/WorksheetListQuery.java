@@ -47,16 +47,16 @@ public class WorksheetListQuery {
 
   public Loader<Cursor> createWorksheetListLoader() {
     return new CursorLoader(context,
-        MakerContentProviderContract.CONTENT_URI,
+        MakerContentProviderContract.Worksheet.CONTENT_URI,
         Projection.PROJECTION,
         null, null,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_DATE_CREATED + " DESC");
+        MakerContentProviderContract.Worksheet.COL_DATE_CREATED + " DESC");
   }
 
   private interface Projection {
     public static final String[] PROJECTION = {
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_ID,
-        MakerContentProviderContract.WORKSHEET_PROJECTIONS.COL_WORKSHEET_NAME,
+        MakerContentProviderContract.Worksheet.COL_ID,
+        MakerContentProviderContract.Worksheet.COL_WORKSHEET_NAME,
     };
 
     int COL_ID = 0;

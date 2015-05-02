@@ -100,7 +100,6 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
         Tables.QuestionTable.COL_DIFFICULTY_LEVEL,
         Tables.QuestionTable.COL_HINT,
         Tables.QuestionTable.COL_ANSWER_TYPE,
-        Tables.QuestionTable.COL_DATE_SOLVED,
         Tables.QuestionTable.COL_IS_MARKED_FOR_DELETION,
         Tables.QuestionTable.COL_LAST_UPDATED,
         Tables.QuestionTable.COL_MAX_ATTEMPTS,
@@ -118,7 +117,6 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
     stmt.bindLong(colIndex++, question.getDifficultyLevel().ordinal());
     bindStringOrNull(stmt, colIndex++, question.getHint());
     stmt.bindLong(colIndex++, question.getAnswerType().ordinal());
-    bindDateOrNull(stmt, colIndex++, question.getDateSolved());
     stmt.bindLong(colIndex++, question.isMarkedForDeletion() ? 1L : 0L);
     bindDateOrNull(stmt, colIndex++, question.getLastUpdated());
     stmt.bindLong(colIndex++, question.getMaxAttempts());

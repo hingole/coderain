@@ -10,11 +10,6 @@ import in.shingole.maker.data.model.Worksheet;
 public class Events {
 
   /**
-   * Event fired whenever a data modification operation successfully completes
-   */
-  public static class DataOperationCompletedEvent {}
-
-  /**
    * Event fired whenever async db operation is completed.
    */
   public static class AsyncOperationCompleteEvent {
