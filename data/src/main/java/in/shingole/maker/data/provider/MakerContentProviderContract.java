@@ -10,9 +10,9 @@ import in.shingole.maker.data.sqlite.Tables;
  * Contract for WorksheetContentProvider
  */
 public class MakerContentProviderContract {
-  static final String AUTHORITY ="in.shingole.maker.provider";
-  static final String WORKSHEET_CONTENT ="worksheet";
-  static final String QUESTION_CONTENT ="question";
+  public static final String AUTHORITY ="in.shingole.maker.provider";
+  public static final String PATH_WORKSHEET ="worksheet";
+  public static final String PATH_QUESTION ="question";
 
   private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
@@ -32,21 +32,28 @@ public class MakerContentProviderContract {
      * content://in.shingole.maker.provider/worksheet
      */
     public static final Uri CONTENT_URI =
-        BASE_CONTENT_URI.buildUpon().appendPath(WORKSHEET_CONTENT).build();
+        BASE_CONTENT_URI.buildUpon().appendPath(PATH_WORKSHEET).build();
 
     /**
      * Content type for list of worksheets
      * vnd.android.cursor.dir/vnd.in.shingole.maker.provider.worksheet
      */
      public static final String CONTENT_TYPE =
-        ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd." + AUTHORITY + "." + WORKSHEET_CONTENT;
+        ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd." + AUTHORITY + "." + PATH_WORKSHEET;
 
     /**
      * Content type for single worksheet item
      * vnd.android.cursor.item/vnd.in.shingole.maker.provider.worksheet
      */
     public static final String CONTENT_ITEM_TYPE =
-        ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd." + AUTHORITY + "." + WORKSHEET_CONTENT;
+        ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd." + AUTHORITY + "." + PATH_WORKSHEET;
+
+    public static Uri getContentUriForQuestions(String worksheetId) {
+      return CONTENT_URI.buildUpon()
+          .appendPath(worksheetId)
+          .appendPath(PATH_QUESTION)
+          .build();
+    }
   }
 
   /**
@@ -72,23 +79,20 @@ public class MakerContentProviderContract {
      * content://in.shingole.maker.provider/worksheet
      */
     public static final Uri CONTENT_URI =
-        BASE_CONTENT_URI.buildUpon().appendPath(QUESTION_CONTENT).build();
-
-    public static final String QUESTIONS_BY_WORKSHEET_CONTENT ="question/worksheet";
-
+        BASE_CONTENT_URI.buildUpon().appendPath(PATH_QUESTION).build();
 
     /**
      * Content type for list of worksheets
      * vnd.android.cursor.dir/vnd.in.shingole.maker.provider.question
      */
     public static final String CONTENT_TYPE =
-        ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd." + AUTHORITY + "." + QUESTION_CONTENT;
+        ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd." + AUTHORITY + "." + PATH_QUESTION;
 
     /**
      * Content type for single question item
      * vnd.android.cursor.item/vnd.in.shingole.maker.provider.question
      */
     public static final String CONTENT_ITEM_TYPE =
-        ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd." + AUTHORITY + "." + QUESTION_CONTENT;
+        ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd." + AUTHORITY + "." + PATH_QUESTION;
   }
 }

@@ -10,6 +10,7 @@ public interface StandardColumns extends BaseColumns {
   public static final String COL_LAST_UPDATED = "last_updated";
   public static final String COL_IS_MARKED_FOR_DELETION = "marked_for_deletion";
 
+  public static final String COL_TYPE_TEXT_NOT_NULL = " TEXT NOT NULL";
   public static final String COL_TYPE_TEXT = " TEXT ";
   public static final String COL_TYPE_NUMERIC = " NUM ";
   public static final String COL_TYPE_INTEGER = " INT ";

@@ -112,10 +112,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
     super.onDestroy();
   }
 
-  protected <T> T getView(int id) {
-    return (T) findViewById(id);
-  }
-
   /**
    * Inject the supplied {@code object} using the activity-specific graph.
    */

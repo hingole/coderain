@@ -64,7 +64,7 @@ public class Tables {
   }
 
   /**
-   * One-to-many worksheet-questions table.
+   * Many-to-many worksheet-questions table.
    */
   public static class WorksheetQuestionsTable implements StandardColumns {
 
@@ -82,6 +82,7 @@ public class Tables {
         + "(" + _ID + ") ON DELETE CASCADE"
         + ", FOREIGN KEY( " + COL_QUESTION_ID + ") REFERENCES " + QuestionTable.TABLE_NAME
         + "(" + _ID + ") ON DELETE CASCADE"
+        + " UNIQUE ( " + COL_WORKSHEET_ID + ", " + COL_QUESTION_ID + ") ON CONFLICT REPLACE"
         + ");";
 
   }
