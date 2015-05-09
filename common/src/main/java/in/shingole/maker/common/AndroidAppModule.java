@@ -3,6 +3,7 @@ package in.shingole.maker.common;
 
 import android.content.Context;
 import android.location.LocationManager;
+import android.view.LayoutInflater;
 
 import com.squareup.otto.Bus;
 
@@ -15,11 +16,24 @@ import dagger.Provides;
     complete = false,
     library = true,
     injects = {
+        TextStyleUtil.class
     }
 )
 public class AndroidAppModule {
 
   /* package */ static Context applicationContext = null;
+
+
+  @Provides @Singleton
+  LayoutInflater provideLayoutInflator() {
+    return (LayoutInflater) applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  }
+
+  @Provides
+  @Annotations.IconTypeface
+  CustomTypefaceSpan provideIconTypeFace(@Annotations.ForApplication Context context) {
+    return new CustomTypefaceSpan(context, "maker.ttf");
+  }
 
   /**
    * Allow the application context to be injected but require that it be annotated with

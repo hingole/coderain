@@ -14,10 +14,10 @@ import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 import in.shingole.R;
-import in.shingole.maker.common.Utils;
 import in.shingole.maker.common.ActivityScopeModule;
 import in.shingole.maker.common.DaggerApplication;
 import in.shingole.maker.common.Injector;
+import in.shingole.maker.common.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends ActionBarActivity implements Injector {
@@ -39,11 +39,11 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
     // Create the activity graph by .plus-ing our modules onto the application graph.
+    // This needs to be done before calling super.onCreate
     DaggerApplication application = (DaggerApplication) getApplication();
     mActivityGraph = application.getObjectGraph().plus(getActivityModules());
+    super.onCreate(savedInstanceState);
 
     // Inject ourselves so subclasses will have dependencies fulfilled when this method returns.
     mActivityGraph.inject(this);

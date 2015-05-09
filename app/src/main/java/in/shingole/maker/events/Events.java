@@ -2,12 +2,28 @@ package in.shingole.maker.events;
 
 import android.net.Uri;
 
+import in.shingole.maker.data.model.Question;
 import in.shingole.maker.data.model.Worksheet;
 
 /**
-* Created by shingole on 1/5/15.
+* Events used in the Maker apps.
 */
 public class Events {
+
+  /**
+   * Event fired when the user selects the correct answer for the question.
+   */
+  public static class CorrectAnswerEvent {
+    private final Question question;
+
+    public CorrectAnswerEvent(Question question) {
+      this.question = question;
+    }
+
+    public Question getQuestion() {
+      return question;
+    }
+  }
 
   /**
    * Event fired whenever async db operation is completed.

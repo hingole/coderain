@@ -9,47 +9,50 @@
 
     <TextView
         android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Count the number of bugs"
         android:textSize="@dimen/abc_text_size_display_1_material"
-        android:id="@+id/question_short_description"/>
+        android:id="@+id/fragment_question_short_description"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.3"
         android:padding="10dp"
         android:textSize="48dp"
         android:text="* * * * * *"
-        android:id="@+id/question_long_description"/>
+        android:id="@+id/fragment_question_long_description"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:paddingTop="50dp"
         android:layout_height="wrap_content">
       <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:textSize="48dp"
             android:text="3"
             android:layout_weight="1"
-            android:id="@+id/multi_choice_one"/>
+            android:id="@+id/fragment_question_multi_choice_one"/>
       <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="48dp"
+            android:padding="10dp"
             android:layout_weight="1"
             android:text="13"
-            android:id="@+id/multi_choice_two"/>
+            android:id="@+id/fragment_question_multi_choice_two"/>
       <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="48dp"
+            android:padding="10dp"
             android:layout_weight="1"
             android:text="7"
-            android:id="@+id/multi_choice_three"/>
+            android:id="@+id/fragment_question_multi_choice_three"/>
 
     </LinearLayout>
 </LinearLayout>

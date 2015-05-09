@@ -96,7 +96,7 @@ public class WorksheetUtil {
         multipleChoices.add(worksheetSolutions.get(i - 1).toString());
         multipleChoices.add(worksheetSolutions.get(i + 1).toString());
       }
-
+      Collections.shuffle(multipleChoices);
       question.setMultipleChoiceOptions(multipleChoices);
       questions.add(question);
     }

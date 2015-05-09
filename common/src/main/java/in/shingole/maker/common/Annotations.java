@@ -19,4 +19,10 @@ public class Annotations {
   @Retention(RUNTIME)
   public static @interface ForApplication {
   }
+
+  @Qualifier
+  @Retention(RUNTIME)
+  public static @interface IconTypeface {
+  }
+
 }

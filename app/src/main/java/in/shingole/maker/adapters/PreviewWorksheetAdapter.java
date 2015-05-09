@@ -1,25 +1,22 @@
 package in.shingole.maker.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
 import in.shingole.R;
-import in.shingole.maker.common.CustomTypefaceSpan;
+import in.shingole.maker.common.Annotations;
+import in.shingole.maker.common.TextChangeHandler;
 import in.shingole.maker.common.TextStyleUtil;
 import in.shingole.maker.data.model.Question;
 import in.shingole.maker.data.model.Worksheet;
@@ -36,23 +33,23 @@ public class PreviewWorksheetAdapter extends BaseAdapter {
     NUM_VIEW_TYPES, // Always keep this last.
   }
 
-  private final Worksheet sheet;
-  private final LayoutInflater inflator;
-  private final CustomTypefaceSpan iconTypefaceSpan;
-  private final Context context;
+  @Inject LayoutInflater inflater;
+  @Inject @Annotations.ForActivity Context context;
+  @Inject TextStyleUtil textStyleUtil;
 
-  private EditText worksheetNameEditText;
-  private EditText worksheetDescriptionEditText;
+  private Worksheet sheet;
 
-  public PreviewWorksheetAdapter(Context context, Worksheet sheet) {
+  @Inject
+  public PreviewWorksheetAdapter(@Annotations.ForActivity Context context) {
     super();
     this.context = context;
-    inflator = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    iconTypefaceSpan = new CustomTypefaceSpan(context, "maker.ttf");
-    this.sheet = sheet;
   }
+
   @Override
   public int getCount() {
+    if (sheet == null) {
+      return 0;
+    }
     return sheet.getQuestionList().size() + 1;
   }
 
@@ -93,72 +90,91 @@ public class PreviewWorksheetAdapter extends BaseAdapter {
     return 0;
   }
 
-  public void updateWorksheet() {
-    sheet.setName(worksheetNameEditText.getText().toString());
-    sheet.setDescription(worksheetDescriptionEditText.getText().toString());
-  }
+  private View getHeaderView(int position, View convertView, ViewGroup parent) {
+    View headerView = convertView;
+    if (convertView == null) {
+      headerView = inflater.inflate(R.layout.preview_worsheet_header, parent, false);
+    }
 
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    if (ViewType.WORKSHEET_HEADER_VIEW.ordinal() == getItemViewType(position)) {
-      LinearLayout headerView;
-      if (convertView == null) {
-        headerView = (LinearLayout) inflator.inflate(
-            R.layout.preview_worsheet_header, parent, false);
-        worksheetNameEditText = (EditText)headerView.findViewById(R.id.worksheetName);
-        worksheetDescriptionEditText = (EditText)headerView.findViewById(R.id.worksheetDescription);
-      } else {
-        headerView = (LinearLayout) convertView;
-      }
+    EditText worksheetNameEditText = ButterKnife.findById(headerView, R.id.worksheetName);
+    EditText worksheetDescriptionEditText = ButterKnife.findById(headerView,
+        R.id.worksheetDescription);
+    if (sheet != null) {
       if (sheet.getName() != null) {
         worksheetNameEditText.setText(sheet.getName());
       }
       if (sheet.getDescription() != null) {
         worksheetDescriptionEditText.setText(sheet.getDescription());
       }
-      return headerView;
+
+      if (convertView == null) {
+        worksheetNameEditText.addTextChangedListener(new TextChangeHandler() {
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+            sheet.setName(s.toString());
+          }
+        });
+        worksheetDescriptionEditText.addTextChangedListener(new TextChangeHandler() {
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+            sheet.setDescription(s.toString());
+          }
+        });
+      }
     }
+
+    return headerView;
+  }
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    if (ViewType.WORKSHEET_HEADER_VIEW.ordinal() == getItemViewType(position)) {
+      return getHeaderView(position, convertView, parent);
+    }
+
     if (convertView == null) {
-      convertView = inflator.inflate(R.layout.fragment_question, parent, false);
+      convertView = inflater.inflate(R.layout.fragment_question, parent, false);
     }
+
+    if (sheet == null) {
+      return convertView;
+    }
+
     Question question = (Question)getItem(position);
     TextView questionShortDescription =
-        (TextView)convertView.findViewById(R.id.question_short_description);
-    SpannableStringBuilder shortDesc = new SpannableStringBuilder(question.getShortDescription());
-    int questionNoIndex = question.getShortDescription().indexOf(")");
-    shortDesc.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.teal)),
-        0, questionNoIndex, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE);
-    shortDesc.setSpan(new ForegroundColorSpan(
-            context.getResources().getColor(R.color.primary_dark_material_dark)),
-        questionNoIndex, question.getShortDescription().length(),
-        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+        (TextView)convertView.findViewById(R.id.fragment_question_short_description);
 
-    questionShortDescription.setText(shortDesc);
+    questionShortDescription.setText(
+        textStyleUtil.formatShortDescription(
+            question.getShortDescription(),
+            context.getResources().getColor(R.color.primary_dark_material_dark),
+            context.getResources().getColor(R.color.secondary_text_default_material_dark)));
 
-    SpannableStringBuilder longDesc = new SpannableStringBuilder(question.getLongDescription());
-    longDesc.setSpan(iconTypefaceSpan, 0, longDesc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    longDesc.setSpan(new ForegroundColorSpan(
-            context.getResources().getColor(R.color.material_orange_A200)),
-        0, longDesc.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    TextView longDescView = (TextView)convertView.findViewById(R.id.question_long_description);
-    longDescView.setText(longDesc);
+    TextView longDescView = (TextView)convertView.findViewById(
+        R.id.fragment_question_long_description);
+    longDescView.setText(
+        textStyleUtil.formatCountingProblemLongDesc(
+            question.getLongDescription(),
+            context.getResources().getColor(R.color.material_orange_A200)));
 
     List<String> options = question.getMultipleChoiceOptions();
     if (options != null && options.size() > 0) {
-      Button option1 = (Button)convertView.findViewById(R.id.multi_choice_one);
-      Button option2 = (Button)convertView.findViewById(R.id.multi_choice_two);
-      Button option3 = (Button)convertView.findViewById(R.id.multi_choice_three);
+      Button option1 = (Button)convertView.findViewById(R.id.fragment_question_multi_choice_one);
+      Button option2 = (Button)convertView.findViewById(R.id.fragment_question_multi_choice_two);
+      Button option3 = (Button)convertView.findViewById(R.id.fragment_question_multi_choice_three);
 
       option1.setText(options.get(0));
       option2.setText(options.get(1));
       option3.setText(options.get(2));
-
     }
     return convertView;
   }
 
+  public void setSheet(Worksheet sheet) {
+    this.sheet = sheet;
+  }
+
   public Worksheet getSheet() {
-    updateWorksheet();
     return sheet;
   }
 }

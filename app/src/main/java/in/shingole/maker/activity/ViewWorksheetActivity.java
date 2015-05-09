@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.squareup.otto.Subscribe;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -16,6 +18,7 @@ import in.shingole.R;
 import in.shingole.maker.adapters.QuestionCursorPagerAdapter;
 import in.shingole.maker.common.Constants;
 import in.shingole.maker.data.query.WorksheetQuestionListQuery;
+import in.shingole.maker.events.Events;
 import in.shingole.maker.fragment.QuestionFragment;
 
 public class ViewWorksheetActivity extends BaseActivity
@@ -52,6 +55,12 @@ public class ViewWorksheetActivity extends BaseActivity
     pager.setAdapter(questionCursorPagerAdapter);
     getSupportLoaderManager().initLoader(Constants.WORKSHEET_QUESTION_LOADER_ID, null, this);
 
+  }
+
+  @Subscribe
+  public void handleEvent(Events.CorrectAnswerEvent event) {
+    //TODO(shingole): Track this event into a log so that user can view his history.
+    pager.setCurrentItem(pager.getCurrentItem() + 1, true);
   }
 
   @Override
