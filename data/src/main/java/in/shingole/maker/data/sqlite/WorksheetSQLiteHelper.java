@@ -4,13 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.os.Debug;
 import android.text.TextUtils;
 
 import com.google.common.collect.ImmutableList;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import in.shingole.maker.data.BuildConfig;
 import in.shingole.maker.data.model.Question;
 import in.shingole.maker.data.model.TestData;
 import in.shingole.maker.data.model.Worksheet;
@@ -25,15 +29,17 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
 
   // The name of the database file on the file system
   public static final String DATABASE_NAME = "SheetMaker.db";
-  private final java.text.DateFormat df;
+  private java.text.DateFormat df;
 
   public WorksheetSQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    df = android.text.format.DateFormat.getDateFormat(context);
   }
 
   @Override
   public void onCreate(SQLiteDatabase db) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("WorksheetSQLiteHelper.onCreate");
+    }
     //TODO: Remove drop table from production version.
     db.execSQL("DROP TABLE IF EXISTS " + Tables.WorksheetQuestionsTable.TABLE_NAME + ";");
     db.execSQL("DROP TABLE IF EXISTS " + Tables.WorksheetTable.TABLE_NAME + ";");
@@ -41,10 +47,21 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
     db.execSQL(Tables.QuestionTable.SQL_CREATE_TABLE);
     db.execSQL(Tables.WorksheetTable.SQL_CREATE_TABLE);
     db.execSQL(Tables.WorksheetQuestionsTable.SQL_CREATE_TABLE);
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
   }
 
   public void onOpen(SQLiteDatabase db) {
-    insertTestData(db);
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("WorksheetSQLiteHelper.insertTestData");
+    }
+
+    //insertTestData(db);
+
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
   }
 
   public void insertTestData(SQLiteDatabase db) {
@@ -64,6 +81,10 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
   }
 
   void insertWorksheetQuestions(SQLiteDatabase db, Worksheet sheet) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("WorksheetSQLiteHelper.insertWorksheetQuestions");
+    }
+
     String query = createInsertQuery(Tables.WorksheetQuestionsTable.TABLE_NAME,
         Tables.WorksheetQuestionsTable.COL_WORKSHEET_ID,
         Tables.WorksheetQuestionsTable.COL_QUESTION_ID);
@@ -76,9 +97,16 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
       Long id = stmt.executeInsert();
       question.setId(Long.toString(id));
     }
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
   }
 
   Long insertWorksheet(SQLiteDatabase db, Worksheet sheet) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("WorksheetSQLiteHelper.insertWorksheet");
+    }
+
     List<String> columns = ImmutableList.of(Tables.WorksheetTable.COL_NAME, Tables.WorksheetTable.COL_CATEGORY,
         Tables.WorksheetTable.COL_DESC, Tables.WorksheetTable.COL_DATE_CREATED);
     SQLiteStatement stmt = db.compileStatement("INSERT INTO " + Tables.WorksheetTable.TABLE_NAME +
@@ -86,11 +114,19 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
     stmt.bindString(1, sheet.getName());
     stmt.bindString(2, sheet.getCategory());
     stmt.bindString(3, sheet.getDescription());
-    stmt.bindString(4, df.format(new Date()));
-    return stmt.executeInsert();
+    stmt.bindString(4, getDateFormat().format(new Date()));
+    long returnValue = stmt.executeInsert();
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
+    return returnValue;
   }
 
   Long insertQuestion(SQLiteDatabase db, Question question) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("WorksheetSQLiteHelper.insertQuestion");
+    }
+
     String query = createInsertQuery(Tables.QuestionTable.TABLE_NAME,
         Tables.QuestionTable.COL_CATEGORY,
         Tables.QuestionTable.COL_TYPE,
@@ -126,7 +162,11 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
         ? null
         : TextUtils.join("::", question.getMultipleChoiceOptions());
     bindStringOrNull(stmt, colIndex++, multipleChoice);
-    return stmt.executeInsert();
+    long returnValue = stmt.executeInsert();
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
+    return returnValue;
   }
 
   private void bindStringOrNull(SQLiteStatement stmt, int colIndex, String value) {
@@ -139,7 +179,7 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
 
   private void bindDateOrNull(SQLiteStatement stmt, int colIndex, Date date) {
     if (date != null) {
-      stmt.bindString(colIndex, df.format(date));
+      stmt.bindString(colIndex, getDateFormat().format(date));
     } else {
       stmt.bindNull(colIndex);
     }
@@ -169,5 +209,12 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+  }
+
+  private DateFormat getDateFormat() {
+    if (df == null) {
+      df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS Z");
+    }
+    return df;
   }
 }

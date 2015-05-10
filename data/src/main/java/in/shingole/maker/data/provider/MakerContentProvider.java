@@ -11,7 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.support.v7.appcompat.BuildConfig;
+import android.os.Debug;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.shingole.maker.data.BuildConfig;
 import in.shingole.maker.data.sqlite.Tables;
 import in.shingole.maker.data.sqlite.WorksheetSQLiteHelper;
 
@@ -87,6 +88,10 @@ public class MakerContentProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri uri, ContentValues values) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("MakerContentProvider.insert");
+    }
+
     Uri resourceUri = null;
     long result = 0;
     switch (uriMatcher.match(uri)) {
@@ -128,18 +133,34 @@ public class MakerContentProvider extends ContentProvider {
           resourceUri,
           null);
     }
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
     return resourceUri;
   }
 
   @Override
   public boolean onCreate() {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("MakerContentProvider.onCreate");
+    }
+
     dbHelper = new WorksheetSQLiteHelper(super.getContext());
+
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
+
     return true;
   }
 
   @Override
   public Cursor query(Uri uri, String[] projection, String selection,
                       String[] selectionArgs, String sortOrder) {
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.startMethodTracing("MakerContentProvider.query");
+    }
+
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     SQLiteDatabase db = dbHelper.getWritableDatabase();
     Cursor cursor = null;
@@ -203,6 +224,10 @@ public class MakerContentProvider extends ContentProvider {
             null);
         break;
     }
+    if (BuildConfig.TRACING_ENABLED) {
+      Debug.stopMethodTracing();
+    }
+
     return cursor;
   }
 
