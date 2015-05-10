@@ -59,6 +59,12 @@ public class DashboardFragment extends BaseFragment
   }
 
   @Override
+  public void onStart() {
+    super.onStart();
+    setViewState(ViewState.LOADING);
+  }
+
+  @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     if (id != Constants.WORKSHEET_LOADER_ID) {
       return null;
@@ -72,6 +78,7 @@ public class DashboardFragment extends BaseFragment
       if (data != null) {
         data.setNotificationUri(getActivity().getContentResolver(),
             MakerContentProviderContract.Worksheet.CONTENT_URI);
+        setViewState(ViewState.RENDERED);
         worksheetCursorAdapter.swapCursor(new WorksheetListQuery.WorksheetCursorWrapper(data));
       }
     }

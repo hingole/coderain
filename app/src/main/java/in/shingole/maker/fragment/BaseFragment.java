@@ -1,18 +1,25 @@
 package in.shingole.maker.fragment;
 
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.LayoutDirection;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import in.shingole.R;
 import in.shingole.maker.activity.BaseActivity;
 
 /**
@@ -76,7 +83,32 @@ public abstract class BaseFragment extends Fragment {
   public void setViewState(ViewState viewState) {
     // Derived classes should override this.
     // Appropriate view should be rendered based on the state.
+    ProgressBar progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
     this.viewState = viewState;
+    if (this.viewState == ViewState.LOADING) {
+      if (progressBar == null && getView() instanceof ViewGroup) {
+        ((ViewGroup) getView()).addView(createNewProgressBar());
+      }
+    } else {
+      if (progressBar != null) {
+        progressBar.setVisibility(View.GONE);
+      }
+    }
+  }
+
+  protected ViewGroup.LayoutParams getLayoutParamsForProgressBar() {
+    return new FrameLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+  }
+
+  protected ProgressBar createNewProgressBar() {
+    ProgressBar progressBar =
+        new ProgressBar(getActivity(), null, android.R.attr.progressBarStyleLarge);
+    progressBar.setId(R.id.progressBar);
+    progressBar.setLayoutParams(getLayoutParamsForProgressBar());
+    progressBar.setVisibility(View.VISIBLE);
+    return progressBar;
   }
 
   public ViewState getViewState() {
