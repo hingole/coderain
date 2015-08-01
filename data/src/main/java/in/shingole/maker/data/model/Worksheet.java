@@ -14,7 +14,7 @@ public class Worksheet extends BaseModel implements Parcelable {
   private String name;
   private String description;
   private String category;
-  List<Question> questionList;
+  private List<Question> questionList;
 
   public Worksheet() {
     super();

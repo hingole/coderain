@@ -72,7 +72,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
         fragmentClass,
         savedInstanceState);
     if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction().replace(getContentFrameId(),
+      getSupportFragmentManager().beginTransaction().add(getContentFrameId(),
           fragment, fragmentTag).commit();
     }
     return fragment;

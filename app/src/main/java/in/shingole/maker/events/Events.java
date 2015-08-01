@@ -3,6 +3,7 @@ package in.shingole.maker.events;
 import android.net.Uri;
 
 import in.shingole.maker.data.model.Question;
+import in.shingole.maker.data.model.User;
 import in.shingole.maker.data.model.Worksheet;
 
 /**
@@ -55,6 +56,18 @@ public class Events {
 
     public Uri getResourceUri() {
       return resourceUri;
+    }
+  }
+
+  public static class UserLoggedInEvent {
+    private final User user;
+
+    public UserLoggedInEvent(User user) {
+      this.user = user;
+    }
+
+    public User getUser() {
+      return user;
     }
   }
 

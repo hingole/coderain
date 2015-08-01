@@ -13,6 +13,7 @@ import in.shingole.maker.data.query.WorksheetQueryModule;
 import in.shingole.maker.fragment.CountWorksheetPreviewFragment;
 import in.shingole.maker.fragment.CreateCountingWorksheetFragment;
 import in.shingole.maker.fragment.DashboardFragment;
+import in.shingole.maker.fragment.LoginFragment;
 import in.shingole.maker.fragment.NavigationDrawerFragment;
 import in.shingole.maker.fragment.QuestionFragment;
 import in.shingole.maker.fragment.SplashFragment;
@@ -28,6 +29,7 @@ import in.shingole.maker.fragment.SplashFragment;
     injects = {
         SplashFragment.class,
         DashboardFragment.class,
+        LoginFragment.class,
         QuestionFragment.class,
         NavigationDrawerFragment.class,
         SplashActivity.class,

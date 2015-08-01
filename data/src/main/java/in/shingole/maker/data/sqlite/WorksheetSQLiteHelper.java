@@ -25,7 +25,7 @@ import in.shingole.maker.data.model.Worksheet;
 public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
 
   // If you change the database schema, you must increment the database version.
-  public static final int DATABASE_VERSION = 1;
+  public static final int DATABASE_VERSION = 2;
 
   // The name of the database file on the file system
   public static final String DATABASE_NAME = "SheetMaker.db";
@@ -44,6 +44,9 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
     db.execSQL("DROP TABLE IF EXISTS " + Tables.WorksheetQuestionsTable.TABLE_NAME + ";");
     db.execSQL("DROP TABLE IF EXISTS " + Tables.WorksheetTable.TABLE_NAME + ";");
     db.execSQL("DROP TABLE IF EXISTS " + Tables.QuestionTable.TABLE_NAME + ";");
+    db.execSQL("DROP TABLE IF EXISTS " + Tables.UserTable.TABLE_NAME + ";");
+
+    db.execSQL(Tables.UserTable.SQL_CREATE_TABLE);
     db.execSQL(Tables.QuestionTable.SQL_CREATE_TABLE);
     db.execSQL(Tables.WorksheetTable.SQL_CREATE_TABLE);
     db.execSQL(Tables.WorksheetQuestionsTable.SQL_CREATE_TABLE);
@@ -208,7 +211,8 @@ public class WorksheetSQLiteHelper extends SQLiteOpenHelper {
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+    //TODO:Fix this so that we don't delete old data.
+    onCreate(db);
   }
 
   private DateFormat getDateFormat() {

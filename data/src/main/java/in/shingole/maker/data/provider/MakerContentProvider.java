@@ -33,6 +33,8 @@ public class MakerContentProvider extends ContentProvider {
   private static final int WORKSHEET_ID_QUESTIONS = 102;
   private static final int QUESTIONS = 103;
   private static final int QUESTION_ID = 104;
+  private static final int USERS = 105;
+  private static final int USER_ID = 106;
 
   private final ThreadLocal<Boolean> mIsInBatchMode = new ThreadLocal<Boolean>();
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -44,7 +46,12 @@ public class MakerContentProvider extends ContentProvider {
     uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
         MakerContentProviderContract.PATH_QUESTION + "/#",
         QUESTION_ID);
-
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.PATH_USER,
+        USERS);
+    uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
+        MakerContentProviderContract.PATH_USER + "/#",
+        USER_ID);
     uriMatcher.addURI(MakerContentProviderContract.AUTHORITY,
         MakerContentProviderContract.PATH_WORKSHEET,
         WORKSHEETS);
@@ -67,6 +74,10 @@ public class MakerContentProvider extends ContentProvider {
   public String getType(Uri uri) {
     // Keep in sync with WorksheetURIMatchingCodes enum.
     switch (uriMatcher.match(uri)) {
+      case USERS:
+        return MakerContentProviderContract.Worksheet.CONTENT_TYPE;
+      case USER_ID:
+        return MakerContentProviderContract.Worksheet.CONTENT_ITEM_TYPE;
       case WORKSHEETS:
         return MakerContentProviderContract.Worksheet.CONTENT_TYPE;
       case WORKSHEET_ID:
@@ -121,6 +132,13 @@ public class MakerContentProvider extends ContentProvider {
       case WORKSHEETS:
         result = dbHelper.getWritableDatabase().insertOrThrow(
             Tables.WorksheetTable.TABLE_NAME, null, values);
+        if (result > 0) {
+          resourceUri = ContentUris.withAppendedId(uri, result);
+        }
+        break;
+      case USERS:
+        result = dbHelper.getWritableDatabase().insertOrThrow(
+            Tables.UserTable.TABLE_NAME, null, values);
         if (result > 0) {
           resourceUri = ContentUris.withAppendedId(uri, result);
         }
@@ -222,6 +240,15 @@ public class MakerContentProvider extends ContentProvider {
             null,
             null,
             null);
+        break;
+      case USERS:
+        qb.setTables(Tables.UserTable.TABLE_NAME);
+        if (TextUtils.isEmpty(sortOrder)) {
+          sortOrder = Tables.WorksheetTable.COL_DATE_CREATED
+              + " DESC";
+        }
+        logQuery(qb, projection, selection, sortOrder);
+        cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         break;
     }
     if (BuildConfig.TRACING_ENABLED) {
