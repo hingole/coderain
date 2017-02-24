@@ -21,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "in.shingole.maker"
+        applicationId "in.shingole.whereis"
         versionCode 1
         versionName "1.0"
     }

@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:layout_height="match_parent">
 
-    <in.shingole.maker.widget.LeftNavigationWidget
+    <in.shingole.whereis.widget.LeftNavigationWidget
         android:id="@+id/left_navigation_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
