@@ -2,11 +2,14 @@ buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
     }
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
+
 }
+
 apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -35,7 +38,7 @@ dependencies {
     debugCompile project(path: ':data', configuration: 'debug')
     releaseCompile project(path: ':common', configuration: 'release')
     debugCompile project(path: ':common', configuration: 'debug')
-
+//    classpath 'io.fabric.tools:gradle:1.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile libs.appcompat
     compile libs.playServices
