@@ -5,9 +5,6 @@ import javax.inject.Singleton;
 
 import in.shingole.maker.data.model.User;
 
-/**
- * Created by shingole on 1/8/15.
- */
 @Singleton
 public class Session {
   private boolean isLoggedIn;

@@ -12,7 +12,6 @@ import in.shingole.R;
  * A template widget for navigation list item.
  */
 public class NavigationItemWidget extends LinearLayout {
-  private View v;
   private LeftNavigationWidget.NavigationType navigationType = null;
   private TextView textView;
 
@@ -26,7 +25,7 @@ public class NavigationItemWidget extends LinearLayout {
 
   public NavigationItemWidget(Context context, AttributeSet attrs, int defaultStyle) {
     super(context, attrs, defaultStyle);
-    v = View.inflate(context, R.layout.navigation_list_item, this);
+    View v = View.inflate(context, R.layout.navigation_list_item, this);
     textView = (TextView) v.findViewById(R.id.navigation_list_item_textview);
   }
 

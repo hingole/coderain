@@ -1,17 +1,12 @@
 package in.shingole.maker.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-import com.squareup.otto.Subscribe;
-
 import in.shingole.R;
-import in.shingole.maker.common.Constants;
-import in.shingole.maker.events.Events;
 import in.shingole.maker.fragment.DashboardFragment;
 import in.shingole.maker.widget.LeftNavigationWidget;
 
@@ -47,9 +42,6 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity {
       templatePickerMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-          Intent intent = new Intent();
-          intent.setClass(DashboardActivity.this, SheetDesignerActivity.class);
-          startActivityForResult(intent, DESIGN_SHEET_REQUEST_CODE);
           return true;
         }
       });
@@ -65,14 +57,6 @@ public class DashboardActivity extends AbstractNavigationDrawerActivity {
   @Override
   protected LeftNavigationWidget.NavigationType getNavigationType() {
     return LeftNavigationWidget.NavigationType.SHEETS;
-  }
-
-  @Subscribe
-  public void openWorksheet(Events.WorksheetIconTappedEvent event) {
-    Intent intent = new Intent();
-    intent.setClass(this, ViewWorksheetActivity.class);
-    intent.putExtra(Constants.PARAM_WORKSHEET_ID, event.getWorksheetId());
-    startActivityForResult(intent, VIEW_WORKSHEET_REQUEST_CODE);
   }
 
 }

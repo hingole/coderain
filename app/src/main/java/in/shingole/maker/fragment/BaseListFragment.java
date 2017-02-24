@@ -12,9 +12,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import in.shingole.maker.activity.BaseActivity;
 
-/**
- * Created by shingole on 1/5/15.
- */
 public abstract class BaseListFragment extends ListFragment {
 
   @Inject

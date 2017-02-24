@@ -9,40 +9,27 @@ import dagger.Provides;
 import in.shingole.maker.app.SheetMakerAppScopeModule;
 import in.shingole.maker.common.ActivityScopeModule;
 import in.shingole.maker.common.Annotations;
-import in.shingole.maker.data.query.WorksheetQueryModule;
-import in.shingole.maker.fragment.CountWorksheetPreviewFragment;
-import in.shingole.maker.fragment.CreateCountingWorksheetFragment;
 import in.shingole.maker.fragment.DashboardFragment;
 import in.shingole.maker.fragment.LoginFragment;
 import in.shingole.maker.fragment.NavigationDrawerFragment;
-import in.shingole.maker.fragment.QuestionFragment;
 import in.shingole.maker.fragment.SplashFragment;
 
-/**
- * Created by shingole on 4/9/15.
- */
 @Module(
-    complete = true,    // Here we enable object graph validation
     library = true,
-    includes = { ActivityScopeModule.class, WorksheetQueryModule.class },
+    includes = { ActivityScopeModule.class },
     addsTo = SheetMakerAppScopeModule.class, // Important for object graph validation at compile time
     injects = {
         SplashFragment.class,
         DashboardFragment.class,
         LoginFragment.class,
-        QuestionFragment.class,
         NavigationDrawerFragment.class,
         SplashActivity.class,
         AbstractNavigationDrawerActivity.class,
         DashboardActivity.class,
-        SheetDesignerActivity.class,
-        ViewWorksheetActivity.class,
-        CreateCountingWorksheetFragment.class,
-        CountWorksheetPreviewFragment.class,
         AsyncQueryHandler.class,
     }
 )
-public class SheetMakerActivityScopeModule {
+class SheetMakerActivityScopeModule {
 
   @Provides
   ContentResolver provideContentResolver(@Annotations.ForActivity Context context) {

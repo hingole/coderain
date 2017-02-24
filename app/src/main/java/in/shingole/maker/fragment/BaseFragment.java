@@ -1,11 +1,9 @@
 package in.shingole.maker.fragment;
 
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.LayoutDirection;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +81,9 @@ public abstract class BaseFragment extends Fragment {
   public void setViewState(ViewState viewState) {
     // Derived classes should override this.
     // Appropriate view should be rendered based on the state.
+    if (getView() == null) {
+      return;
+    }
     ProgressBar progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
     this.viewState = viewState;
     if (this.viewState == ViewState.LOADING) {

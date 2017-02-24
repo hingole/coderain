@@ -8,21 +8,14 @@ import android.net.Uri;
 import com.squareup.otto.Bus;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Random;
 
 import javax.inject.Inject;
 
-import in.shingole.maker.data.model.Question;
 import in.shingole.maker.data.model.User;
-import in.shingole.maker.data.model.Worksheet;
-import in.shingole.maker.data.provider.MakerContentProvider;
 import in.shingole.maker.data.provider.MakerContentProviderContract;
 import in.shingole.maker.events.Events;
 
-/**
- * Created by shingole on 25/5/15.
- */
 public class AsyncUserQueryHandler extends AsyncQueryHandler {
   private final Bus bus;
   private final Random random;
@@ -33,7 +26,7 @@ public class AsyncUserQueryHandler extends AsyncQueryHandler {
     super(cr);
     this.bus = bus;
     random = new Random();
-    contentResolver = new WeakReference<ContentResolver>(cr);
+    contentResolver = new WeakReference<>(cr);
   }
 
   /**
@@ -66,7 +59,7 @@ public class AsyncUserQueryHandler extends AsyncQueryHandler {
     }
   }
 
-  ContentValues getContentValuesForUser(User user) {
+  private ContentValues getContentValuesForUser(User user) {
     ContentValues values = new ContentValues();
     values.put(MakerContentProviderContract.User.COL_USER_ID,
         user.getUserId());

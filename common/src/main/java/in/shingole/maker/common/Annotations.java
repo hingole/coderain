@@ -6,23 +6,20 @@ import javax.inject.Qualifier;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/**
- * Created by shingole on 4/8/15.
- */
 public class Annotations {
   @Qualifier
   @Retention(RUNTIME)
-  public static @interface ForActivity {
+  public @interface ForActivity {
   }
 
   @Qualifier
   @Retention(RUNTIME)
-  public static @interface ForApplication {
+  @interface ForApplication {
   }
 
   @Qualifier
   @Retention(RUNTIME)
-  public static @interface IconTypeface {
+  public @interface IconTypeface {
   }
 
 }

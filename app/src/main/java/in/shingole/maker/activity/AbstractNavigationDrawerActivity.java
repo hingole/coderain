@@ -12,7 +12,6 @@ import in.shingole.maker.widget.LeftNavigationWidget;
 public abstract class AbstractNavigationDrawerActivity extends BaseActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-  protected LeftNavigationWidget navigation;
   /**
    * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
    */
@@ -22,7 +21,6 @@ public abstract class AbstractNavigationDrawerActivity extends BaseActivity
    * Used to store the last screen title. For use in {@link #restoreActionBar()}.
    */
   private CharSequence mTitle;
-  private DrawerLayout drawerLayout;
 
   public AbstractNavigationDrawerActivity() {
     super(R.layout.activity_base_navigation_drawer);
@@ -35,13 +33,13 @@ public abstract class AbstractNavigationDrawerActivity extends BaseActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    drawerLayout = (DrawerLayout) this.findViewById(R.id.drawer_layout);
+    DrawerLayout drawerLayout = (DrawerLayout) this.findViewById(R.id.drawer_layout);
     mNavigationDrawerFragment = (NavigationDrawerFragment)
         getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
     mTitle = getTitle();
     mNavigationDrawerFragment.setUp(
         R.id.navigation_drawer,
-        (DrawerLayout) findViewById(R.id.drawer_layout));
+        drawerLayout);
   }
 
   public void onSectionAttached(int number) {

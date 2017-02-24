@@ -1,6 +1,5 @@
 package in.shingole.maker.fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -8,15 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,12 +27,12 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import in.shingole.R;
 import in.shingole.maker.activity.AsyncUserQueryHandler;
-import in.shingole.maker.activity.ViewWorksheetActivity;
-import in.shingole.maker.common.Constants;
 import in.shingole.maker.common.Utils;
 import in.shingole.maker.data.model.User;
 import in.shingole.maker.data.query.UserQuery;
 import in.shingole.maker.events.Events;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -163,13 +158,12 @@ public class LoginFragment extends BaseFragment implements
     // Reaching onConnected means we consider the user signed in.
     Log.i(TAG, "onConnected");
 
-    mStatus.setText("Signed in");
-
     // Retrieve some profile information to personalize our app for the user.
     Person currentUser = Plus.PeopleApi.getCurrentPerson(googleApiClient);
 
     if (currentUser != null) {
       currentLoggedInUser = currentUser;
+
       mStatus.setText(String.format(
           getResources().getString(R.string.signed_in_as),
           currentUser.getDisplayName()));
@@ -205,7 +199,6 @@ public class LoginFragment extends BaseFragment implements
 
   /**
    * Called when a new user is inserted in our db on first login.
-   * @param event
    */
   @Subscribe
   public void onCreateUser(Events.InsertOperationCompleteEvent event) {
@@ -275,7 +268,7 @@ public class LoginFragment extends BaseFragment implements
                                Intent data) {
     switch (requestCode) {
       case RC_SIGN_IN:
-        if (resultCode == getActivity().RESULT_OK) {
+        if (resultCode == RESULT_OK) {
           // If the error resolution was successful we should continue
           // processing errors.
           mSignInProgress = STATE_SIGN_IN;

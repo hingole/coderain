@@ -11,9 +11,9 @@ import android.text.style.MetricAffectingSpan;
  * Custom typeface that can be applied to Spannable text.
  */
 public class CustomTypefaceSpan extends MetricAffectingSpan {
-  Typeface customTypeface;
+  private Typeface customTypeface;
   private static LruCache<String, Typeface> typefaceCache =
-      new LruCache<String, Typeface>(4);
+      new LruCache<>(4);
 
   public CustomTypefaceSpan(Context context, String fontFileName) {
     customTypeface = typefaceCache.get(fontFileName);
