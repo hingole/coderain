@@ -18,7 +18,6 @@ import in.shingole.whereis.common.ActivityScopeModule;
 import in.shingole.whereis.common.DaggerApplication;
 import in.shingole.whereis.common.Injector;
 import in.shingole.whereis.common.Utils;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends ActionBarActivity implements Injector {
 
@@ -50,11 +49,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     setContentView(baseLayoutId);
     initActionBar();
-  }
-
-  @Override
-  protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
   }
 
   /**

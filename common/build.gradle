@@ -6,7 +6,7 @@ android {
 }
 
 dependencies {
-    compile libs.playServices
+    compile libs.firebaseCore
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile libs.appcompat
     compile libs.dagger

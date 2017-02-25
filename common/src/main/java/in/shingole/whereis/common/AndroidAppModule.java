@@ -16,7 +16,6 @@ import dagger.Provides;
     complete = false,
     library = true,
     injects = {
-        TextStyleUtil.class
     }
 )
 public class AndroidAppModule {
@@ -27,12 +26,6 @@ public class AndroidAppModule {
   @Provides @Singleton
   LayoutInflater provideLayoutInflator() {
     return (LayoutInflater) applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  }
-
-  @Provides
-  @Annotations.IconTypeface
-  CustomTypefaceSpan provideIconTypeFace(@Annotations.ForApplication Context context) {
-    return new CustomTypefaceSpan(context, "maker.ttf");
   }
 
   /**

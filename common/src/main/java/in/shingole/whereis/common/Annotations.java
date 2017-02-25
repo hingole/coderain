@@ -17,9 +17,4 @@ public class Annotations {
   @interface ForApplication {
   }
 
-  @Qualifier
-  @Retention(RUNTIME)
-  public @interface IconTypeface {
-  }
-
 }
