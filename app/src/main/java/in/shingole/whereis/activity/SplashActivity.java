@@ -2,7 +2,9 @@ package in.shingole.whereis.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
@@ -18,6 +20,8 @@ import in.shingole.whereis.fragment.SplashFragment;
  */
 public class SplashActivity extends BaseActivity {
 
+  private final String TAG = getClass().getName();
+
   public SplashActivity() {
     super(R.layout.activity_splash);
   }
@@ -32,6 +36,9 @@ public class SplashActivity extends BaseActivity {
     addFragment(SplashFragment.FRAGMENT_TAG, SplashFragment.class, savedInstanceState);
     loginFragment =
         addFragment(LoginFragment.FRAGMENT_TAG, LoginFragment.class, savedInstanceState);
+
+    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+    Log.i(TAG, "Refreshed token: " + refreshedToken);
   }
 
   @Override

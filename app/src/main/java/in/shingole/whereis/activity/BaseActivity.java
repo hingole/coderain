@@ -2,12 +2,19 @@ package in.shingole.whereis.activity;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -19,7 +26,14 @@ import in.shingole.whereis.common.DaggerApplication;
 import in.shingole.whereis.common.Injector;
 import in.shingole.whereis.common.Utils;
 
-public abstract class BaseActivity extends ActionBarActivity implements Injector {
+
+public abstract class BaseActivity extends AppCompatActivity implements Injector {
+
+  private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+  private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
+
+
+  private final String TAG = getClass().getName();
 
   private final int baseLayoutId;
   protected ActionBar actionBar;
@@ -49,6 +63,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     setContentView(baseLayoutId);
     initActionBar();
+    checkGooglePlayServicesAvailable();
   }
 
   /**
@@ -96,6 +111,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
   public void onResume() {
     super.onResume();
     bus.register(this);
+    checkGooglePlayServicesAvailable();
   }
 
   @Override
@@ -122,5 +138,32 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
     return new Object[]{
         new ActivityScopeModule(this), new SheetMakerActivityScopeModule()
     };
+  }
+
+  /**
+   * Ensure Google Play Services is up to date, if not help the user update it.
+   */
+  private void checkGooglePlayServicesAvailable() {
+    GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+    int connectionStatusCode = googleApiAvailability
+        .isGooglePlayServicesAvailable(this);
+    if (connectionStatusCode != ConnectionResult.SUCCESS) {
+      if (googleApiAvailability.isUserResolvableError(connectionStatusCode)) {
+        googleApiAvailability.getErrorDialog(this, connectionStatusCode,
+            REQUEST_GOOGLE_PLAY_SERVICES, new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                showGooglePlayServicesWarning();
+              }
+            }).show();
+      } else {
+        showGooglePlayServicesWarning();
+        Log.i(TAG, "This device is not supported. Code " + connectionStatusCode);
+      }
+    }
+  }
+
+  private void showGooglePlayServicesWarning() {
+    Toast.makeText(getApplicationContext(), R.string.play_services_error, Toast.LENGTH_SHORT).show();
   }
 }

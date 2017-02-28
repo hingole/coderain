@@ -40,6 +40,6 @@
 
     <!-- Used if there was an error loading the signed in user's name. -->
     <string name="unknown_person">Unknown</string>
-    <string name="play_services_error">Google Play services is not available.  This application will close.</string>
+    <string name="play_services_error">Google Play services is not available.</string>
     <string name="close">Close</string>
 </resources>
